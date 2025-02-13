@@ -11,7 +11,14 @@ import { clerkMiddleware, requireAuth } from "@clerk/express"; // Middleware Cle
 const app = express(); // ✅ Utilisation de "app" au lieu de "App"
 
 // ✅ Middleware : ordre correct
-app.use(cors()); // Autorise les requêtes cross-origin
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Autorise uniquement ton frontend
+    credentials: true, // Permet les cookies/session (Clerk)
+  })
+);
+
+app.use(express.json());
 app.use(express.json()); // ✅ Doit être avant Clerk pour parser correctement les requêtes
 app.use(clerkMiddleware()); // Clerk Middleware
 

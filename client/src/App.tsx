@@ -3,9 +3,8 @@ import {
   createRoutesFromElements,
   RouterProvider,
   Route,
-  Navigate,
 } from "react-router-dom";
-import { useAuth } from "@clerk/clerk-react";
+import { useAuth, RedirectToSignIn } from "@clerk/clerk-react";
 import React from "react";
 
 import Loader from "./components/Loader";
@@ -27,15 +26,15 @@ type ProtectedRouteProps = {
 };
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
- const { isLoaded, isSignedIn } = useAuth();
+  const { isLoaded, isSignedIn } = useAuth();
 
   if (!isLoaded) return <Loader />;
-  if (!isSignedIn) return <Navigate to="/login" replace />; 
+  if (!isSignedIn) return <RedirectToSignIn redirectUrl="/presence" />;
 
   return <>{children}</>;
 };
 
-// 🔥 Redirection après connexion (une seule fois)
+// 🔥 Configuration Clerk pour la redirection après connexion
 
 
 // Routes
@@ -46,9 +45,6 @@ const router = createBrowserRouter(
       <Route path="/Acceuil" element={<Acceuil />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-
-      {/* Redirection après connexion */}
-      
 
       {/* Pages protégées */}
       <Route

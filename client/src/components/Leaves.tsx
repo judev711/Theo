@@ -1,12 +1,12 @@
 // import React from 'react'
 import {  Key, SetStateAction, useEffect, useState } from "react"
+import axios from 'axios'
 import { Link, useNavigate } from "react-router-dom"
 import { BiHome } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { MdDarkMode, MdOutlineDateRange } from "react-icons/md";
 import { MdReportGmailerrorred } from "react-icons/md";
-import { MdNotifications } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { PiSignOut } from "react-icons/pi";
 import { MdModeEditOutline } from "react-icons/md";
@@ -17,11 +17,14 @@ import { FaSort } from "react-icons/fa";
 import { TbClockHour4 } from "react-icons/tb";
 import { TbEdit } from "react-icons/tb";
 import { UserButton } from "@clerk/clerk-react";
-import axios from "axios";
 import { useUser } from "@clerk/clerk-react"; //
+import InfosNotif from "./Infos";
+import toast from "react-hot-toast";
+
 
 
 interface Conge {
+  raison: string;
   id_user: Key | null | undefined;
   id: number;
   type_conge: string;
@@ -31,7 +34,8 @@ interface Conge {
   status: string;
 }
 const Leaves = () => {
-   const num = 1;
+   
+
   const [Tab, setTab]=useState(3);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const toggleSidebar = () => {
@@ -74,32 +78,37 @@ const toggle = ()=>{
     }
   };
   //recuperation des conges
-const [conges, setConges] = useState<Conge[]>([]);
-const [loading, setLoading] = useState(true);
-const [error, setError] = useState<string | null>(null);
+ // Récupération de l'utilisateur connecté via Clerk
+  const [conges, setConges] = useState<Conge[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-useEffect(() => {
-  const fetchConges = async () => {
-    if (!user?.id) return; // Vérifier que l'utilisateur est connecté
+  useEffect(() => {
+    const fetchConges = async () => {
+      try {
+        if (!user) return;
+        const response = await axios.get(
+          "http://localhost:5000/Api/conges/Demande",
+          { withCredentials: true } // Permet l'authentification via Clerk
+        );
+        console.log("✅ Réponse du backend :", response.data);
+        setConges(response.data);
+      } catch (err) {
+         setError("Erreur lors de la récupération des congés");
+         console.error("❌ Erreur Axios :", error);
+        console.error(err);
+        return toast.error('Erreur de recuperation');
+      } finally {
+        toast.error('Erreur Inconnu')
+      }
+    };
 
-    try {
-      const response = await axios.get("http://localhost:5000/Api/conges/Demande");
-      setConges(response.data);
-      console.log('Réponse:', response.data);
-    } catch (err) {
-      console.error("❌ Erreur récupération congés :", err);
-      setError("Erreur lors de la récupération des demandes de congés.");
-    } finally {
-      setLoading(false);
+    fetchConges();
+  }, [error, user]);
+
+    if (error) {
+        return <div>{error}</div>;
     }
-  };
 
-  fetchConges();
-}, [user?.id]);
-
-if (loading) return <p>Chargement des congés...</p>;
-if (error) return <p className="text-red-500">{error}</p>;
-if (conges.length === 0) return <p>Aucune demande de congé trouvée.</p>;
   return ( <>
   
    <nav   className={`fixed top-0 z-50 w-full bg-[#7e22ce] border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700`}>
@@ -134,7 +143,11 @@ if (conges.length === 0) return <p>Aucune demande de congé trouvée.</p>;
               </div>
             </div>  
             </Link>
-            <MdNotifications className="flex-shrink-0 max-sm:w-5 max-sm:h-5 w-7 h-7 text-white cursor-pointer dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+            <div className="flex col ">
+              
+              <InfosNotif />
+            </div>
+            
             <MdDarkMode className="text-2xl text-white"/>
             <div
              
@@ -147,43 +160,7 @@ if (conges.length === 0) return <p>Aucune demande de congé trouvée.</p>;
             </div>
           </div>
           {/* user profil */}
-                  <div
-                  
-                    className={`z-50 absolute right-0 mt-52 mx-2  py-2 w-54 bg-white rounded-md shadow-lg dark:bg-gray-700 ${
-                      open ? 'block' : 'hidden'
-                    }`}
-                  >
-                    <ul className="divide-y divide-gray-100 dark:divide-gray-600">
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                          <p>Theo@711</p>
-                          <p>theodore@gmail.com</p>
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 hover:text-green-600 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                        Profile
-                        </a>
-                      </li>
-                    
-                      <li>
-                      <Link to="/Login">
-                        <a
-                          href="#"
-                          className="block px-4 py-2 hover:text-red-600 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                          Sign out
-                        </a>
-                      </Link>
-                      </li>
-                    </ul>
-                  </div>
+                 
           {/* **************** */}
         </div>
       </div>
@@ -198,54 +175,54 @@ if (conges.length === 0) return <p>Aucune demande de congé trouvée.</p>;
         {/* icon Dashboard */}
          <li className="">
           <Link to='/admin'>
-            <a href="#" className="flex items-center  p-2 text-gray-900 rounded-lg dark:text-white  hover:bg-gray-100 dark:hover:bg-gray-700 group ">
-               <BiHome className={`flex-shrink-0 w-5 h-5 ${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-500'}      dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white   `}/>
+          <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <BiHome className={`flex-shrink-0 w-5 h-5 ${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-500'}      dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white   `}/>
                <span  onClick={()=>HandlesTab(1)} className={`${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-900'} ms-[1.29rem]   `} > Dashboard</span>
-            </a>
+          </div>
+               
             </Link>
          </li>
          <li>
          {/* profil users */}
             <Link to='/userdetail' >
-            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               
-               <FiUser className={`flex-shrink-0 w-5 h-5 ${Tab ===2 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`} />
+            <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <FiUser className={`flex-shrink-0 w-5 h-5 ${Tab ===2 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`} />
                   
                <span onClick={()=>HandlesTab(2)} className={`${Tab===2 ? 'text-blue-600 font-bold':'text-gray-900'}  whitespace-nowrap ms-[1.29rem] `} >Profile</span>
-               
-            </a>
+            </div>
+              
             </Link>
          {/* profil users */}
          </li>
          <li>
          {/* Leaves Applications */}
           <Link to='/Leaves' >
-            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               <MdOutlineDateRange className={`flex-shrink-0 w-5 h-5 ${Tab ===3 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`} />
+          <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <MdOutlineDateRange className={`flex-shrink-0 w-5 h-5 ${Tab ===3 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`} />
                <span  onClick={()=>HandlesTab(3)} className={`${Tab===3 ? 'text-blue-600 font-bold':'text-gray-900'} flex-1  whitespace-nowrap ms-[1.29rem] `}>Leave Applications</span>
-            </a>
+          </div>
+               
             </Link>
          {/* Leaves Applications */}
          </li>
          <li>
           {/* Notifications */}
           <Link to='/Notifications' >
-            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               
-               <IoNotificationsOutline  className={`flex-shrink-0 w-5 h-5 ${Tab ===4 ? 'text-blue-600 font-bold':'text-gray-500'} dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`}/>
+               <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                     <IoNotificationsOutline  className={`flex-shrink-0 w-5 h-5 ${Tab ===4 ? 'text-blue-600 font-bold':'text-gray-500'} dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`}/>
                <span  onClick={()=>HandlesTab(4)} className={`${Tab===4 ? 'text-blue-600 font-bold':'text-gray-900'} flex-1  whitespace-nowrap  ms-[1.29rem] `}>Notifications</span>
-            </a>
+               </div>
+               
             {/* Notifications */}
             </Link>
          </li>
          <li>
           {/* reportproblems */}
           <Link to='/Reportproblem' >
-            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               
+           <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                <MdReportGmailerrorred className={`flex-shrink-0 w-5 h-5 ${Tab ===5 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`}/>
                <span  onClick={()=>HandlesTab(5)} className={`${Tab===5 ? 'text-blue-600 font-bold': 'text-gray-900'} flex-1  whitespace-nowrap ms-[1.29rem] `}>Report a Problem</span>
-            </a>
+           </div>
             </Link>
             {/*reportproblems  */}
          </li>
@@ -429,38 +406,57 @@ if (conges.length === 0) return <p>Aucune demande de congé trouvée.</p>;
          </div>
          
          {/* ici */}
-          <div className="grid grid-cols-2 gap-4 p-3 -mt-4 mb-6 max-sm:grid-cols-1 md:grid-cols-1 max-md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
-      { num > 0 &&
-       conges.map((task) => (
-        <div key={task.id_user} className="flex justify-between rounded-md bg-slate-300 font-poppins">
-          <div className="flex flex-col p-3">
-            <div className="flex items-center gap-2 mb-5">
-              <TbClockHour4 className="font-poppins" />
-              <p className="font-semibold">{new Date(task.date_emis).toLocaleDateString()}</p>
-            </div>
-            <div className="flex flex-col gap-1 text-sm">
-              <p className="text-gray-500">From Date</p>
-              <p className="font-bold">{new Date(task.date_debut).toLocaleDateString()}</p>
-            </div>
+      <div className="grid grid-cols-2 gap-4 p-3 -mt-4 mb-6 max-sm:grid-cols-1 md:grid-cols-1 max-md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+  {conges.map((task) => (
+    <div key={task.id} className="flex flex-col rounded-md bg-slate-300 font-poppins p-3">
+      <div className="flex justify-between">
+        {/* Section Gauche */}
+        <div className="flex flex-col">
+          <div className="flex items-center gap-2 mb-5">
+            <TbClockHour4 className="font-poppins" />
+            <p className="font-semibold">{new Date(task.date_emis).toLocaleDateString()}</p>
           </div>
-          <div className="flex flex-col p-3">
-            <div className="mb-4">
-              <div className="rounded-full p-2 bg-green-100 flex items-center justify-center">
-                <p className={`text-xs font-extrabold ${
-                  task.status === "Approuvé" ? "text-green-400" : "text-yellow-400"
-                }`}>
-                  {task.status}
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col gap-1 text-sm">
-              <p className="text-gray-500">To Date</p>
-              <p className="font-bold">{new Date(task.date_fin).toLocaleDateString()}</p>
-            </div>
+          <div className="flex flex-col gap-1 text-sm">
+            <p className="text-gray-500">From Date</p>
+            <p className="font-bold">{new Date(task.date_debut).toLocaleDateString()}</p>
           </div>
         </div>
-      ))}
+
+        {/* Section Droite */}
+        <div className="flex flex-col">
+          <div className="mb-4">
+          <div className={`rounded-full p-2 flex items-center justify-center ${
+  task.status === "Approuvé" ? "bg-green-100" : "bg-yellow-100"
+}`}>
+  <p className={`text-xs font-extrabold ${
+    task.status === "Approuvé" ? "text-green-400" : "text-yellow-400"
+  }`}>
+    {task.status}
+  </p>
+</div>
+
+          </div>
+          <div className="flex flex-col gap-1 text-sm">
+            <p className="text-gray-500">To Date</p>
+            <p className="font-bold">{new Date(task.date_fin).toLocaleDateString()}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Type de congé et Raison (Ajoutés ici) */}
+      <div className="mt-2  bg-slate-300 flex items-center justify-between rounded-md">
+        <p className="text-gray-600 text-sm">Type de congé :</p>
+        <p className="text-red-600">{task.type_conge}</p>
+      </div>
+
+      <div className="mt-2  bg-slate-300 flex items-center justify-between rounded-md">
+        <p className="text-gray-600 text-sm">Raison :</p>
+        <p className="italic text-blue-600">{task.raison}</p>
+      </div>
     </div>
+  ))}
+</div>
+
  
 
 
