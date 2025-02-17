@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@face-auth/face-id": "^0.1.3"
+  }
+}
