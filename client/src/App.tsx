@@ -20,6 +20,8 @@ import Reportproblem from "./components/Reportproblem";
 import Register from "./components/Register";
 import Presence from "./components/Presence";
 import Erreur from "./components/Erreur";
+import Toast from "./components/Toastify";
+import DarkMode from "./components/DarkMode";
 
 type ProtectedRouteProps = {
   children: React.ReactNode;
@@ -45,6 +47,8 @@ const router = createBrowserRouter(
       <Route path="/Acceuil" element={<Acceuil />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+      <Route path = "/notif" element={<Toast/>}/>
+      <Route path = "/darkmode" element={<DarkMode/>}/>
 
       {/* Pages protégées */}
       <Route

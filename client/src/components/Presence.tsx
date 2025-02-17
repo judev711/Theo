@@ -7,6 +7,7 @@ import {  useUser } from "@clerk/clerk-react";
 import Loader from "./Loader"
 import FaceId from './FaceId'
 import GetLocation from "./GetLocation";
+
 // import { SignIn } from "@clerk/clerk-react";
 
 
@@ -84,43 +85,6 @@ const toggle = ()=>{
             </div>
           </div>
           {/* user profil */}
-                  <div
-                  
-                    className={`z-50 absolute right-0 mt-52 mx-2  py-2 w-54 bg-white rounded-md shadow-lg dark:bg-gray-700 ${
-                      open ? 'hidden' : 'hidden'
-                    }`}
-                  >
-                    <ul className="divide-y divide-gray-100 dark:divide-gray-600">
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                          <p>Theo@711</p>
-                          <p>theodore@gmail.com</p>
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 hover:text-green-600 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                        Profile
-                        </a>
-                      </li>
-                    
-                      <li>
-                      <Link to="/Login">
-                        <a
-                          href="#"
-                          className="block px-4 py-2 hover:text-red-600 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                          Sign out
-                        </a>
-                      </Link>
-                      </li>
-                    </ul>
-                  </div>
           {/* **************** */}
         </div>
       </div>
@@ -136,7 +100,8 @@ const toggle = ()=>{
        <GetLocation/>
       </div>
       <div className="w-full">
-        <h1 className="text-start font-semibold">hello {user?.firstName}, please check your presence !</h1> 
+        <h1 className="text-start font-semibold mb-4">hello {user?.firstName}, please check your presence !</h1> 
+        <h1 className="font-extrabold text-center bg-blue-400 rounded">FACE ID</h1>
         <FaceId/>
         <p className="text-green-600 font-bold mt-5">Please verify your presence within the company premises !</p>
 

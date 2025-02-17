@@ -56,10 +56,10 @@ const NotificationIcon = () => {
 
       {/* Liste des notifications */}
       {showNotifications && (
-        <div className="absolute top-12 right-0 w-64 bg-white border rounded-lg shadow-lg p-3 z-50 max-h-60 overflow-auto">
+        <div className="absolute top-12 right-0 w-64 dark:text-white bg-white dark:bg-gray-600 border rounded-lg shadow-lg p-3 z-50 max-h-60 overflow-auto">
           <h3 className="text-sm font-semibold mb-2">Notifications</h3>
           {notifications.length === 0 ? (
-            <p className="text-gray-500 text-sm">Aucune notification</p>
+            <p className="text-gray-500 dark:text-white text-sm">Aucune notification</p>
           ) : (
             <ul className="space-y-2">
               {notifications.slice(0, 3).map((notif, index) => (

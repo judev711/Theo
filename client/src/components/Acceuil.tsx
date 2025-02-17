@@ -17,9 +17,9 @@ const Acceuil = () => {
   const [openIndex, setOpenIndex] = useState <number | null>(null);
 
   const faqs = [
-    { question: "Qu'est-ce que React ?", answer: "React est une bibliothèque JavaScript pour construire des interfaces utilisateur." },
-    { question: "Qu'est-ce que Tailwind CSS ?", answer: "Tailwind CSS est un framework de design utilitaire pour construire rapidement des interfaces modernes." },
-    { question: "Comment fonctionne useState ?", answer: "useState est un hook qui permet de gérer l'état local dans un composant fonctionnel React." },
+    { question: "C'est quoi le Coaching individuels ?", answer: "C'est un accompagnement personnalisé visant à aider une personne à atteindre un objectif spécifique, à améliorer ses compétences ou à surmonter des défis personnels ou professionnels." },
+    { question: "C'est Quoi La formation en développement personnel ?", answer: "C'est une formation qui vise à aider une personne à mieux se connaître, à améliorer ses compétences personnelles et professionnelles, et à atteindre ses objectifs de vie." },
+    { question: "Comment Fonctionne Les ateliers de motivation ?", answer: "C'est une session interactive où les participants travaillent sur leur mindset, leurs objectifs et leur énergie pour booster leur motivation et passer à l’action. Il est animé par un coach ou un formateur et peut être organisé en groupe ou en individuel." },
   ];
 
   const toggleFAQ = (index:number) => {
@@ -139,8 +139,8 @@ const Acceuil = () => {
           <div className="flex flex-col gap-2">
           <h1 className="mt-5 text-xl font-bold text-violet-700">Coaching individuels</h1>
           <p className="text-1rem">Coaching personnalisé pour exploiter votre potentiel</p>
-          <button className="bg-violet-700 text-white p-2 rounded flex justify-center mb-3 font-bold ">Bientot Disponible</button>
-          <div><p className="text-white xl:mx-60 max-sm:mx-20 md:mx-6 hover:bg-violet-400 rounded hover cursor-pointer   text-center items-center bg-violet-600  ">Plus d'informations</p></div>
+          <p className="bg-violet-700 text-white p-2 rounded flex justify-center mb-3 font-bold ">Bientot Disponible</p>
+          
         </div>
         </div>
         {/* deuxieme grid */}
@@ -149,8 +149,7 @@ const Acceuil = () => {
           <div className="flex flex-col gap-2">
           <h1 className="mt-5 text-xl font-bold text-violet-700">Formation en développement personnel</h1>
           <p className="text-1rem">Formations pour renforcer vos compétences</p>
-          <button className="bg-violet-700 text-white p-2 rounded flex justify-center mb-3 font-bold ">Bientot Disponible</button>
-          <div><p className="text-white xl:mx-60 max-sm:mx-20 md:mx-6 hover:bg-violet-400 rounded hover cursor-pointer   text-center items-center bg-violet-600  ">Plus d'informations</p></div>
+          <p className="bg-violet-700 text-white p-2 rounded flex justify-center mb-3 font-bold ">Bientot Disponible</p>
         </div>
         </div>
         {/* troisieme grid */}
@@ -159,9 +158,7 @@ const Acceuil = () => {
           <div className="flex flex-col gap-2">
           <h1 className="mt-5 text-xl font-bold text-violet-700">Ateliers De Motivation</h1>
           <p className="text-1rem">Ateliers de motivation pour booster votre confiance</p>
-          <button className="bg-violet-700 text-white p-2 rounded flex justify-center font-bold mb-3 ">Bientot Disponible</button>
-          <div><p className="text-white xl:mx-60 max-sm:mx-20 md:mx-6 hover:bg-violet-400 rounded hover cursor-pointer   text-center items-center bg-violet-600  ">Plus d'informations</p></div>
-          
+          <p className="bg-violet-700 text-white p-2 rounded flex justify-center mb-3 font-bold ">Bientot Disponible</p>
           </div>
           
         </div>

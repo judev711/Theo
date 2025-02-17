@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 const AUTHORIZED_ZONE = {
   lat:  4.0862, // Exemple: Paris
   lon: 9.7452,
-  radius: 0.5, // Rayon autorisé en km
+  radius: 1, // Rayon autorisé en km
 };
 
 // Fonction pour calculer la distance entre deux points GPS (Haversine Formula)

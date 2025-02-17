@@ -5,6 +5,7 @@ import "dotenv/config";
 import Register_userRoutes from "./routes/Register_user.js"; // Routes pour l'inscription
 import Conges_users from "./routes/Conges_users.js"; // Routes pour les congés
 import RecupConges_users from "./routes/RecupConges_user.js"
+import EnregiFace from "./routes/EnregiFace.js"
 
 import { clerkMiddleware, requireAuth } from "@clerk/express"; // Middleware Clerk
 
@@ -25,7 +26,8 @@ app.use(clerkMiddleware()); // Clerk Middleware
 // ✅ Définition des routes
 app.use("/Register", Register_userRoutes);
 app.use("/postC", Conges_users);
-app.use("/Api/conges", RecupConges_users)
+app.use("/Api/conges", RecupConges_users);
+app.use("/Api/Post", EnregiFace);
 
 // ✅ Exemple d'une route protégée avec Clerk
 app.get("/protected", requireAuth(), (req, res) => {

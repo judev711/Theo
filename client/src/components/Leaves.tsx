@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { BiHome } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { IoNotificationsOutline } from "react-icons/io5";
-import { MdDarkMode, MdOutlineDateRange } from "react-icons/md";
+import {  MdOutlineDateRange } from "react-icons/md";
 import { MdReportGmailerrorred } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { PiSignOut } from "react-icons/pi";
@@ -20,6 +20,7 @@ import { UserButton } from "@clerk/clerk-react";
 import { useUser } from "@clerk/clerk-react"; //
 import InfosNotif from "./Infos";
 import toast from "react-hot-toast";
+import DarkMode from './DarkMode.tsx'
 
 
 
@@ -118,14 +119,14 @@ const toggle = ()=>{
       <div  className="flex items-center justify-start rtl:justify-end ">
         
         {/* burger */}
-        <button  onClick={toggleSidebar}   type="button" className="inline-flex items-center p-2 text-sm text-white  font-bold  dark:text-gray-400 dark:hover:bg-gray-700 " >
+        <button  onClick={toggleSidebar}   type="button" className="inline-flex items-center p-2 text-sm text-white  font-bold  dark:text-white dark:hover:bg-gray-700 dark:hover:rounded-md  " >
                <RxHamburgerMenu className={`w-5 h-5 `} />
             {/* burger */}
          </button>
          
          
         <a href="" className="flex ms-2 md:me-24  gap-2">
-          <span className="self-center text-xl text-white font-extrabold sm:text-2xl whitespace-nowrap text dark:text-white">Theo</span>
+          <span className="self-center text-xl text-white font-extrabold sm:text-2xl whitespace-nowrap text dark:text-gray-600">Theo</span>
         </a>
         {/* logo */}
       </div>
@@ -144,19 +145,15 @@ const toggle = ()=>{
             </div>  
             </Link>
             <div className="flex col ">
-              
+
               <InfosNotif />
             </div>
-            
-            <MdDarkMode className="text-2xl text-white"/>
+            <DarkMode/>
             <div
-             
-             
               className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
               onClick={toggle}
             >
               <UserButton/>
-              
             </div>
           </div>
           {/* user profil */}
@@ -171,13 +168,13 @@ const toggle = ()=>{
 {/* start sidebar */}
 <aside  className={`fixed  top-0 left-0 z-40  h-screen  pt-20  ${!isSidebarOpen ?'w-16':'w-56'}    bg-violet-100 border-r border-gray-200 transition-all duration-700  dark:bg-gray-800 dark:border-gray-700`} >
    <div  className={`h-full  px-[0.80rem] pb-4 overflow-y-auto  dark:bg-gray-800   `}>
-      <ul className={`space-y-3 font-medium     ` }>
+      <ul className={`space-y-3 font-medium dark:text-white    ` }>
         {/* icon Dashboard */}
          <li className="">
           <Link to='/admin'>
           <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <BiHome className={`flex-shrink-0 w-5 h-5 ${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-500'}      dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white   `}/>
-               <span  onClick={()=>HandlesTab(1)} className={`${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-900'} ms-[1.29rem]   `} > Dashboard</span>
+            <BiHome className={`flex-shrink-0 w-5 h-5 ${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-500'}      dark:text-white group-hover:text-white dark:group-hover:text-white   `}/>
+               <span  onClick={()=>HandlesTab(1)} className={`${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-900'} dark:text-white ms-[1.29rem]   `} > Dashboard</span>
           </div>
                
             </Link>
@@ -186,9 +183,9 @@ const toggle = ()=>{
          {/* profil users */}
             <Link to='/userdetail' >
             <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <FiUser className={`flex-shrink-0 w-5 h-5 ${Tab ===2 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`} />
+                <FiUser className={`flex-shrink-0 w-5 h-5 ${Tab ===2 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-white `} />
                   
-               <span onClick={()=>HandlesTab(2)} className={`${Tab===2 ? 'text-blue-600 font-bold':'text-gray-900'}  whitespace-nowrap ms-[1.29rem] `} >Profile</span>
+               <span onClick={()=>HandlesTab(2)} className={`${Tab===2 ? 'text-blue-600 font-bold':'text-gray-900'}  whitespace-nowrap ms-[1.29rem] dark:text-white `} >Profile</span>
             </div>
               
             </Link>
@@ -198,7 +195,7 @@ const toggle = ()=>{
          {/* Leaves Applications */}
           <Link to='/Leaves' >
           <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <MdOutlineDateRange className={`flex-shrink-0 w-5 h-5 ${Tab ===3 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`} />
+            <MdOutlineDateRange className={`flex-shrink-0 w-5 h-5 ${Tab ===3 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-white group-hover:text-gray-900 dark:group-hover:text-white`} />
                <span  onClick={()=>HandlesTab(3)} className={`${Tab===3 ? 'text-blue-600 font-bold':'text-gray-900'} flex-1  whitespace-nowrap ms-[1.29rem] `}>Leave Applications</span>
           </div>
                
@@ -209,8 +206,8 @@ const toggle = ()=>{
           {/* Notifications */}
           <Link to='/Notifications' >
                <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                     <IoNotificationsOutline  className={`flex-shrink-0 w-5 h-5 ${Tab ===4 ? 'text-blue-600 font-bold':'text-gray-500'} dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`}/>
-               <span  onClick={()=>HandlesTab(4)} className={`${Tab===4 ? 'text-blue-600 font-bold':'text-gray-900'} flex-1  whitespace-nowrap  ms-[1.29rem] `}>Notifications</span>
+                     <IoNotificationsOutline  className={`flex-shrink-0 w-5 h-5 ${Tab ===4 ? 'text-blue-600 font-bold':'text-gray-500'} dark:text-white group-hover:text-gray-900 dark:group-hover:text-white`}/>
+               <span  onClick={()=>HandlesTab(4)} className={`${Tab===4 ? 'text-blue-600 font-bold':'text-gray-900'} flex-1  whitespace-nowrap  ms-[1.29rem] dark:text-white `}>Notifications</span>
                </div>
                
             {/* Notifications */}
@@ -220,8 +217,8 @@ const toggle = ()=>{
           {/* reportproblems */}
           <Link to='/Reportproblem' >
            <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               <MdReportGmailerrorred className={`flex-shrink-0 w-5 h-5 ${Tab ===5 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`}/>
-               <span  onClick={()=>HandlesTab(5)} className={`${Tab===5 ? 'text-blue-600 font-bold': 'text-gray-900'} flex-1  whitespace-nowrap ms-[1.29rem] `}>Report a Problem</span>
+               <MdReportGmailerrorred className={`flex-shrink-0 w-5 h-5 ${Tab ===5 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-white group-hover:text-gray-900 dark:group-hover:text-white`}/>
+               <span  onClick={()=>HandlesTab(5)} className={`${Tab===5 ? 'text-blue-600 font-bold': 'text-gray-900'} flex-1  whitespace-nowrap ms-[1.29rem] dark:text-white `}>Report a Problem</span>
            </div>
             </Link>
             {/*reportproblems  */}
@@ -230,19 +227,19 @@ const toggle = ()=>{
    </div>
 </aside>
 {/* End sidebar */}
-<div className="p-4 ml-14 mt-5  ">
-   <div  className={`p-4 border-2 bg-[#F3F4F6] ${isSidebarOpen ? 'translate-x-0':'14'} transition-transform  border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-10`}>
+<div className="p-4 ml-14 mt-5 dark:bg-gray-600  ">
+   <div  className={`p-4 border-2 bg-[#F3F4F6] ${isSidebarOpen ? 'translate-x-0':'14'} transition-transform dark:bg-slate-500  border-gray-200  dark:text-white rounded-lg dark:border-gray-700 mt-10`}>
       
         {/*  Leaves */}
-         <div className="flex items-center p-3 h-20 rounded bg-gray-50 dark:bg-gray-800 mb-4 font-poppins">
+         <div className="flex items-center p-3 dark:text-white h-20 rounded bg-gray-50 dark:bg-gray-800 mb-4 font-poppins">
             <div  className="flex items-center justify-between  bg-gray-50 dark:bg-gray-800 w-full">
                <div  className="flex flex-row gap-2">
                   <div className="h-[30px] bg-violet-700 w-2 rounded-lg"></div>
-                  <p className="text-xl text-black dark:text-gray-500">Leaves</p>
+                  <p className="text-xl text-black dark:text-white">Leaves</p>
                </div>
                <div onClick={toggleModal} className="flex items-center gap-2 bg-violet-700 p-2 px-4 rounded-lg cursor-pointer">
                   <MdModeEditOutline className="text-white text-2xl "/>
-                  <p className="text-[15px] text-white dark:text-gray-500">Leave Request</p>
+                  <p className="text-[15px] text-white dark:text-white">Leave Request</p>
                </div>
             </div>
             {/* Debut de la modal*********************************************************** */}
@@ -258,7 +255,7 @@ const toggle = ()=>{
                   <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                   <div className="flex items-center gap-2 ">
                      <div className="w-2 bg-violet-700 h-[30px] rounded-full"></div>
-                     <p className="text-[18px]  max-sm:text-[14px] text-black dark:text-gray-500 ">Leave Request</p>
+                     <p className="text-[18px]  max-sm:text-[14px] text-black dark:text-white ">Leave Request</p>
                   </div>
                   <button
                      onClick={toggleModal}
@@ -289,10 +286,10 @@ const toggle = ()=>{
                      <div className="grid grid-cols-2  gap-2 max-sm:grid-cols-1 justify-center items-center">
                         <div className="flex flex-col gap-1 ">
                            <div className="flex flex-col gap-1 mb-3 max-sm:mb-1">
-                              <p className="text-sm font-bold leading-relaxed text-black dark:text-gray-400">
+                              <p className="text-sm font-bold leading-relaxed text-black dark:text-white">
                                  Leave Type
                               </p>
-                           <select name="New" id="first" onChange={(e)=> SetcongeData({...CongeData, type_conge:e.target.value})} required className="font-poppins bg-gray-100    border-[1px] border-black rounded max-sm:text-sm ">
+                           <select name="New" id="first" onChange={(e)=> SetcongeData({...CongeData, type_conge:e.target.value})} required className="font-poppins dark:bg-gray-700    border-[1px] border-black rounded max-sm:text-sm ">
                                  <option value="">Choose Leave Type</option>
                                  <option  value="Annual Leave">Annual Leave</option>
                                  <option  value="Monthly Leave">Monthly Leave</option>
@@ -303,28 +300,28 @@ const toggle = ()=>{
                            <div className="flex flex-col font-poppins gap-1 mb-3 max-sm:mb-1 ">
                               {/* les deux inputs de  */}
                               <div className="flex flex-col font-poppins gap-1 mb-3 max-sm:mb-1">
-                                 <p className="text-sm font-bold leading-relaxed text-black dark:text-gray-400">
+                                 <p className="text-sm font-bold leading-relaxed  text-black dark:text-black">
                                  From
                               </p>
-                              <input onChange={(e)=> SetcongeData({... CongeData, date_debut: e.target.value})} required type="date" className="bg-violet-200 rounded"/>
+                              <input onChange={(e)=> SetcongeData({... CongeData, date_debut: e.target.value})} required type="date" className="bg-violet-200 rounded dark:bg-gray-700"/>
                               </div>
                               <div className="flex flex-col font-poppins gap-1 mb-3 max-sm:mb-1 ">
-                              <p className="text-sm font-bold leading-relaxed text-black dark:text-gray-400">
+                              <p className="text-sm font-bold leading-relaxed text-black dark:text-white">
                                  To
                               </p>
-                              <input onChange={(e)=> SetcongeData({... CongeData, date_fin: e.target.value})} required type="date" className="bg-violet-200 rounded"/>
+                              <input onChange={(e)=> SetcongeData({... CongeData, date_fin: e.target.value})} required type="date" className="bg-violet-200 rounded dark:bg-gray-700"/>
                            </div>
                            </div>
                            
                            <div className="flex flex-col font-poppins gap-1 mb-3 max-sm:mb-1 ">
-                              <p className="text-sm font-bold leading-relaxed text-black dark:text-gray-400">
+                              <p className="text-sm font-bold leading-relaxed text-black dark:text-white">
                                  Reason
                               </p>
-                              <textarea onChange={(e)=> SetcongeData({... CongeData, raison: e.target.value})} required className="rounded"></textarea>
+                              <textarea onChange={(e)=> SetcongeData({... CongeData, raison: e.target.value})} required className="rounded dark:bg-gray-700"></textarea>
                            </div>
                         </div>
                         {/* 2em  grid****************************************************** */}
-                        <div className="p-3 bg-green-100 text-sm rounded-lg">
+                        <div className="p-3 bg-green-100 dark:border-2px dark:border dark:bg-gray-700 text-sm rounded-lg">
                            <p className="font-semibold text-center">Your Request Includes</p>
                            <div className="flex justify-between w-full mb-3 mt-6 max-sm:mb-1 max-sm:mt-1">
                               <p className="font-semibold">11/15/2023</p>
@@ -384,7 +381,7 @@ const toggle = ()=>{
          <div className="flex   justify-between p-3  rounded  dark:bg-gray-800 w-full mb-4">
             <div className="flex  gap-2">
                <div className=" flex items-center h-[30px] w-2 rounded-lg bg-violet-700 p-1"></div>
-               <p className="font-poppins text-xl text-black dark:text-gray-500">Leaves History</p>
+               <p className="font-poppins text-xl text-black dark:text-white">Leaves History</p>
             </div>
             <div className="flex flex-row gap-2 max-sm:hidden  ">
                <div className="bg-violet-700 p-1 rounded-lg h-[32px]">
@@ -408,7 +405,7 @@ const toggle = ()=>{
          {/* ici */}
       <div className="grid grid-cols-2 gap-4 p-3 -mt-4 mb-6 max-sm:grid-cols-1 md:grid-cols-1 max-md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
   {conges.map((task) => (
-    <div key={task.id} className="flex flex-col rounded-md bg-slate-300 font-poppins p-3">
+    <div key={task.id} className="flex flex-col rounded-md bg-slate-300 dark:bg-gray-600 font-poppins p-3">
       <div className="flex justify-between">
         {/* Section Gauche */}
         <div className="flex flex-col">
@@ -444,13 +441,13 @@ const toggle = ()=>{
       </div>
 
       {/* Type de congé et Raison (Ajoutés ici) */}
-      <div className="mt-2  bg-slate-300 flex items-center justify-between rounded-md">
-        <p className="text-gray-600 text-sm">Type de congé :</p>
+      <div className="mt-2 dark:text-white   flex items-center justify-between ">
+        <p className="text-gray-600 text-sm dark:text-white">Type de congé :</p>
         <p className="text-red-600">{task.type_conge}</p>
       </div>
 
-      <div className="mt-2  bg-slate-300 flex items-center justify-between rounded-md">
-        <p className="text-gray-600 text-sm">Raison :</p>
+      <div className="mt-2   flex items-center justify-between ">
+        <p className="text-gray-600 text-sm dark:text-white">Raison :</p>
         <p className="italic text-blue-600">{task.raison}</p>
       </div>
     </div>
@@ -462,7 +459,7 @@ const toggle = ()=>{
 
       </div>
    </div>
-   <div className="flex items-center mt-4 justify-center gap-3 font-poppins mb-4 rounded  dark:bg-gray-800">
+   <div className="flex h-full p-10 items-center mt-4 justify-center gap-3 font-poppins mb-4 rounded  dark:bg-gray-800">
         <div className="rounded-lg p-3 bg-slate-300 cursor-pointer">
            <p>Previous</p>
         </div>

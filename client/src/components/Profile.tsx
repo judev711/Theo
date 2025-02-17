@@ -4,9 +4,8 @@ import { Link } from "react-router-dom"
 import { BiHome } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { IoNotificationsOutline } from "react-icons/io5";
-import { MdDarkMode, MdOutlineDateRange } from "react-icons/md";
+import { MdOutlineDateRange } from "react-icons/md";
 import { MdReportGmailerrorred } from "react-icons/md";
-import { MdNotifications } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { PiSignOut } from "react-icons/pi";
 import { FaDownload } from "react-icons/fa";
@@ -23,6 +22,8 @@ import { FaStar } from "react-icons/fa6";
 import { UserButton, useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import { jsPDF } from "jspdf";
+import Infos from './Infos.tsx'
+import DarkMode from "./DarkMode.tsx";
 
 const Profile = () => {
    useEffect(()=>{
@@ -174,8 +175,8 @@ const metadata = user.publicMetadata as PublicMetadata;
               </div>
             </div>  
             </Link>
-            <MdNotifications className="flex-shrink-0 max-sm:w-5 max-sm:h-5 w-7 h-7 text-white cursor-pointer dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-            <MdDarkMode className="text-2xl text-white"/>
+            <Infos />
+            <DarkMode/>
             <div
              
              
@@ -202,9 +203,9 @@ const metadata = user.publicMetadata as PublicMetadata;
         {/* icon Dashboard */}
          <li className="">
           <Link to='/admin'>
-            <a href="#" className="flex items-center  p-2 text-gray-900 rounded-lg dark:text-white  hover:bg-gray-100 dark:hover:bg-gray-700 group ">
-               <BiHome className={`flex-shrink-0 w-5 h-5 ${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-500'}      dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white   `}/>
-               <span  onClick={()=>HandlesTab(1)} className={`${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-900'} ms-[1.29rem]   `} > Dashboard</span>
+            <a href="#" className="flex items-center  p-2 text-gray-900 rounded-lg   hover:bg-gray-100 dark:hover:bg-gray-700 group ">
+               <BiHome className={`flex-shrink-0 w-5 h-5 ${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-500'}      dark:text-white  group-hover:text-gray-900 dark:group-hover:text-white   `}/>
+               <span  onClick={()=>HandlesTab(1)} className={`${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-900'} dark:text-white  ms-[1.29rem]   `} > Dashboard</span>
             </a>
             </Link>
          </li>
@@ -213,7 +214,7 @@ const metadata = user.publicMetadata as PublicMetadata;
             <Link to='/userdetail' >
             <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                
-               <FiUser className={`flex-shrink-0 w-5 h-5 ${Tab ===2 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`} />
+               <FiUser className={`flex-shrink-0 w-5 h-5 ${Tab ===2 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-white  group-hover:text-gray-900 dark:group-hover:text-white`} />
                   
                <span onClick={()=>HandlesTab(2)} className={`${Tab===2 ? 'text-blue-600 font-bold':'text-gray-900'} ms-[1.29rem] whitespace-nowrap  `} >Profile</span>
                
@@ -225,8 +226,8 @@ const metadata = user.publicMetadata as PublicMetadata;
          {/* Leaves Applications */}
           <Link to='/Leaves' >
             <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               <MdOutlineDateRange className={`flex-shrink-0 w-5 h-5 ${Tab ===3 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`} />
-               <span  onClick={()=>HandlesTab(3)} className={`${Tab===3 ? 'text-blue-600 font-bold':'text-gray-900'} flex-1 ms-[1.29rem] whitespace-nowrap  `}>Leave Applications</span>
+               <MdOutlineDateRange className={`flex-shrink-0 w-5 h-5 ${Tab ===3 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-white  group-hover:text-gray-900 dark:group-hover:text-white`} />
+               <span  onClick={()=>HandlesTab(3)} className={`${Tab===3 ? 'text-blue-600 font-bold':'text-gray-900'} flex-1 ms-[1.29rem] whitespace-nowrap dark:text-white   `}>Leave Applications</span>
             </a>
             </Link>
          {/* Leaves Applications */}
@@ -236,8 +237,8 @@ const metadata = user.publicMetadata as PublicMetadata;
           <Link to='/Notifications' >
             <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                
-               <IoNotificationsOutline  className={`flex-shrink-0 w-5 h-5 ${Tab ===4 ? 'text-blue-600 font-bold':'text-gray-500'} dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`}/>
-               <span  onClick={()=>HandlesTab(4)} className={`${Tab===4 ? 'text-blue-600 font-bold':'text-gray-900'} flex-1 ms-[1.29rem] whitespace-nowrap  `}>Notifications</span>
+               <IoNotificationsOutline  className={`flex-shrink-0 w-5 h-5 ${Tab ===4 ? 'text-blue-600 font-bold':'text-gray-500'} dark:text-white  group-hover:text-gray-900 dark:group-hover:text-white`}/>
+               <span  onClick={()=>HandlesTab(4)} className={`${Tab===4 ? 'text-blue-600 font-bold':'text-gray-900'} flex-1 ms-[1.29rem] whitespace-nowrap dark:text-white   `}>Notifications</span>
             </a>
             {/* Notifications */}
             </Link>
@@ -247,8 +248,8 @@ const metadata = user.publicMetadata as PublicMetadata;
           <Link to='/Reportproblem' >
             <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                
-               <MdReportGmailerrorred className={`flex-shrink-0 w-5 h-5 ${Tab ===5 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`}/>
-               <span  onClick={()=>HandlesTab(5)} className={`${Tab===5 ? 'text-blue-600 font-bold': 'text-gray-900'} flex-1 ms-[1.29rem] whitespace-nowrap  `}>Report a Problem</span>
+               <MdReportGmailerrorred className={`flex-shrink-0 w-5 h-5 ${Tab ===5 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-white group-hover:text-gray-900  dark:group-hover:text-white`}/>
+               <span  onClick={()=>HandlesTab(5)} className={`${Tab===5 ? 'text-blue-600 font-bold': 'text-gray-900'} flex-1 ms-[1.29rem] whitespace-nowrap dark:text-white   `}>Report a Problem</span>
             </a>
             </Link>
             {/*reportproblems  */}
@@ -257,20 +258,20 @@ const metadata = user.publicMetadata as PublicMetadata;
    </div>
 </aside>
 {/* End sidebar */}
-<div className="p-4 ml-14 mt-5 ">
+<div className="p-4 ml-14 mt-5 dark:bg-gray-600 ">
 {/* Employee Details */}
-   <div  className={`p-4 border-2 bg-white/45 ${isSidebarOpen ? 'translate-x-0':'14'} transition-transform  border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-10 `}>
+   <div  className={`p-4 border-2 bg-white/45 ${isSidebarOpen ? 'translate-x-0':'14'} transition-transform  border-gray-200  rounded-lg dark:border-gray-700 mt-10 `}>
       <div className="  mb-4 ">
         {/* les trois premiers grid (1re colone) */}
          <div className="flex flex-col  p-3    rounded bg-[#F3F4F6] dark:bg-gray-800">
             <div className="flex  justify-between max-sm:flex-col max-sm:items-start gap-6 mb-10     items-center w-full">
                <div className="flex gap-1 items-center">
                   <div className="bg-violet-700 p-1 rounded-lg w-2 h-[30px]"></div>
-                  <p className="text-xl  text font-poppins  text-black dark:text-gray-500">Employee Details</p>
+                  <p className="text-xl  text font-poppins  text-black dark:text-white">Employee Details</p>
                </div>
                <div onClick={handleDownload} className="flex gap-1 items-center text-white p-3 rounded-lg bg-violet-700 cursor-pointer">
                   <FaDownload className="" />
-                  <p className="text font-poppins dark:text-gray-500">Download Info</p>
+                  <p className="text font-poppins dark:text-white">Download Info</p>
                </div>
             </div>
             <div className="flex flex-row max-sm:flex-col max-sm:gap-2 ">
@@ -283,7 +284,7 @@ const metadata = user.publicMetadata as PublicMetadata;
                      />
                   </div>
                </div>
-               <div className="flex  items-center max-sm:justify-center text-xl md:text-2xl mb-2 px-6 py-3 max-sm:px-0 max-sm:py-0">
+               <div className="flex  items-center max-sm:justify-center text-xl md:text-2xl mb-2 px-6 py-3 max-sm:px-0 max-sm:py-0 dark:text-white">
                {user?.fullName}
                </div>
             </div>
@@ -291,14 +292,14 @@ const metadata = user.publicMetadata as PublicMetadata;
                   <div className="relative overflow-x-auto">
                      {/* max-md:hidden */}
                      <table className="text-sm text-left hidden lg:block sm:block md:block ">
-                        <thead className="text-xs  text-gray-500 uppercase bg-transparent">
+                        <thead className="text-xs   text-gray-500 uppercase bg-transparent">
                            <tr>
-                              <td scope="col" className="px-6 py-3 ">Role</td>
-                              <td scope="col" className="px-6 py-3">Phone Number</td>
-                              <td scope="col" className="px-6 py-3">Email Address</td></tr>
+                              <td scope="col" className="px-6 py-3 text-gray-400 ">Role</td>
+                              <td scope="col" className="px-6 py-3 text-gray-400">Phone Number</td>
+                              <td scope="col" className="px-6 py-3 text-gray-400">Email Address</td></tr>
                         </thead>
                         <tbody>
-                              <tr  className="bg-transparent text-textColor">
+                              <tr  className="bg-transparent text-textColor dark:text-white">
                               <th className="px-6 py-4 font-md">{metadata.role ?? "Non spécifié"}</th>
                               <th className="px-6 py-4 font-md">{metadata.phonenumber ?? "Non spécifiée"}</th>
                               <th className="px-6 py-4 font-md">{user.primaryEmailAddress?.emailAddress ?? "Non spécifié"}</th>
@@ -307,22 +308,22 @@ const metadata = user.publicMetadata as PublicMetadata;
                      </table>
                      {/* max-md:hidden */}
                      {/* table 2 */}
-                     <table className=" text-sm text-left hidden max-sm:block   ">
-                        <thead className="text-xl flex  max text-black uppercase bg-transparent w-full">
+                     <table className=" text-sm text-left hidden max-sm:block    ">
+                        <thead className="text-xl flex dark:text-white  max text-black uppercase bg-transparent w-full">
                            <th className="">Informations</th>
                         </thead>
-                        <tbody>
-                              <tr  className="text-xs  text-gray-500 uppercas bg-transparent">
-                              <th className="px-6 py-4 font-md">Role</th>
-                              <td className="text-black font-bold text-sm">{metadata.role ?? "Non spécifié"}</td>
+                        <tbody className="dark:text-white">
+                              <tr  className="text-xs  text-gray-500 dark:text-white uppercas bg-transparent">
+                              <th className="px-6 py-4 font-md text-gray-400">Role</th>
+                              <td className="text-black font-bold text-sm dark:text-white">{metadata.role ?? "Non spécifié"}</td>
                            </tr>
-                           <tr className="text-xs  text-gray-500 uppercas bg-transparent">
-                              <th className="px-6 py-4 font-md">PHONE NUMBER</th>
-                              <td className="text-black font-bold text-sm">{metadata.phonenumber ?? "Non spécifiée"}</td>
+                           <tr className="text-xs  text-gray-500  uppercas bg-transparent">
+                              <th className="px-6 py-4 font-md text-gray-400">PHONE NUMBER</th>
+                              <td className="text-black font-bold text-sm dark:text-white">{metadata.phonenumber ?? "Non spécifiée"}</td>
                            </tr>
-                           <tr className="text-xs  text-gray-500  bg-transparent">
-                              <th className="px-6 py-4 font-md">EMAIL ADDRESS</th>
-                              <td className="text-black font-bold text-sm">{user.primaryEmailAddress?.emailAddress ?? "Non spécifié"}</td>
+                           <tr className="text-xs  text-gray-500   bg-transparent">
+                              <th className="px-6 py-4 font-md text-gray-400">EMAIL ADDRESS</th>
+                              <td className="text-black font-bold text-sm dark:text-white">{user.primaryEmailAddress?.emailAddress ?? "Non spécifié"}</td>
                            </tr>
                         </tbody>
                      </table>
@@ -334,7 +335,7 @@ const metadata = user.publicMetadata as PublicMetadata;
                <div className="flex rounded-full bg-slate-200 w-10 h-10 items-center justify-center">
                   <BiLogIn className=" flex items-center font-extrabold center text-2xl  dark:text-gray-500 " />
                </div>
-               <div className=" flex flex-col ">
+               <div className=" flex flex-col dark:text-white ">
                   <p className="px-2">20</p>
                   <p className="text-sm">Total Attendance</p>
                </div>
@@ -343,7 +344,7 @@ const metadata = user.publicMetadata as PublicMetadata;
                <div className="flex rounded-full bg-slate-200 w-10 h-10 items-center justify-center">
                   <CiLogin  className=" flex items-center font-extrabold center text-2xl  dark:text-gray-500 " />
                </div>
-               <div className=" flex flex-col ">
+               <div className=" flex flex-col dark:text-white ">
                   <p className="px-2">3 </p>
                   <p className="text-sm">Pending Leaves Request</p>
                </div>
@@ -352,7 +353,7 @@ const metadata = user.publicMetadata as PublicMetadata;
                <div className="flex rounded-full bg-slate-200 w-10 h-10 items-center justify-center">
                   <LuLogOut className=" flex items-center font-extrabold center text-2xl  dark:text-gray-500 " />
                </div>
-               <div className=" flex flex-col ">
+               <div className=" flex flex-col dark:text-white">
                   <p className="px-2">5</p>
                   <p className="text-sm">Total Leaves</p>
                </div>
@@ -361,7 +362,7 @@ const metadata = user.publicMetadata as PublicMetadata;
                <div className="flex rounded-full bg-slate-200 w-10 h-10 items-center justify-center">
                   <FaUserCheck className=" flex items-center font-extrabold center text-2xl  dark:text-gray-500 " />
                </div>
-               <div className=" flex flex-col ">
+               <div className=" flex flex-col dark:text-white">
                   <p className="px-2">2</p>
                   <p className="text-sm"> Total Absents</p>
                </div>
@@ -375,7 +376,7 @@ const metadata = user.publicMetadata as PublicMetadata;
          <div className="flex   justify-between  rounded  dark:bg-gray-800 w-full mb-4">
             <div className="flex  gap-2">
                <div className=" flex items-center h-[30px] w-2 rounded-lg bg-violet-700 p-1"></div>
-               <p className="font-poppins text-xl text-gray-700">Attendance History</p>
+               <p className="font-poppins text-xl text-gray-700 dark:text-white">Attendance History</p>
             </div>
             <div className="flex flex-row gap-2 max-sm:hidden  ">
                <div className="bg-violet-700 p-1 rounded-lg h-[32px]">
@@ -395,32 +396,32 @@ const metadata = user.publicMetadata as PublicMetadata;
             </div>
             
          </div>
-            <div className="flex justify-between w-[360px] max-sm:w-[285px] max-md:w-[500px] rounded-md bg-slate-300 font-poppins ">
+            <div className="flex justify-between w-[360px] max-sm:w-[285px] max-md:w-[500px] rounded-md bg-slate-300 dark:text-white dark:bg-gray-700 font-poppins ">
                 <div className="flex flex-col  p-3">
                   <div className="flex items-center gap-2 mb-4">
                      <TbClockHour4 className="font-poppins"/>
                      <p className="font-semibold ">Dec 24, 2024</p>
                   </div>
-                  <div className="flex flex-col gap-1 text-sm">
-                  <p className="text-gray-500">Check In time</p>
-                  <p className="font-bold">9:00 AM</p>
+                  <div className="flex flex-col gap-1 text-sm ">
+                  <p className="text-gray-500 dark:text-white">Check In time</p>
+                  <p className="font-bold dark:text-white">9:00 AM</p>
                   </div>
 
                 </div>
                 <div className="flex flex-col  p-3">
                   <div className="mb-4">
-                     <div className="rounded-full p-2 bg-green-200 flex items-center justify-center ">
-                        <p className="text-green-400 text-xs font-extrabold">On Time</p>
+                     <div className="rounded-full p-2 bg-green-200 dark:bg-gray-600 flex items-center justify-center ">
+                        <p className="text-green-400 text-xs font-extrabold dark:text-white">On Time</p>
                      </div>
                   </div>
-                  <div className="flex flex-col gap-1  text-sm">
-                     <p className="text-gray-500">Check Out Time</p>
-                     <p className="font-bold">6:00 PM</p>
+                  <div className="flex flex-col gap-1  text-sm ">
+                     <p className="text-gray-500 dark:text-white ">Check Out Time</p>
+                     <p className="font-bold dark:text-white">6:00 PM</p>
                   </div>
                 </div>
             </div>
       </div>
-      <div className="flex items-center justify-center gap-3 font-poppins mb-4 rounded  dark:bg-gray-800">
+      <div className="flex items-center justify-center gap-3 font-poppins mb-4 rounded  dark:bg-gray-800 p-6">
         <div className="rounded-lg p-3 bg-slate-300 cursor-pointer">
            <p>Previous</p>
         </div>
@@ -434,7 +435,7 @@ const metadata = user.publicMetadata as PublicMetadata;
          <div className="flex flex-col p-3 gap-2 font-poppins rounded bg-slate-100 h-48 dark:bg-gray-800 mb-4">
             <div className="flex gap-2 mb-4">
                <div className="h-[30px] flex items-center  bg-violet-700 w-2 rounded-lg"></div>
-               <p className=" text-gray-700 text-xl dark:text-gray-500">
+               <p className=" text-gray-700 text-xl dark:text-white">
                   Reviews
                </p>
             </div>
@@ -447,11 +448,11 @@ const metadata = user.publicMetadata as PublicMetadata;
                      <FaStar/>
                      <FaStar/>
                   </div>
-                  <p className="text-2xl ">|</p>
-                  <p className="text-gray-600 font-poppins">24 Dec 2024</p>
+                  <p className="text-2xl dark:text-white ">|</p>
+                  <p className="text-gray-600 font-poppins dark:text-white">24 Dec 2024</p>
             </div>
-            <p className="px-6 font-bold">He is a good student</p>
-            <hr className="border-black"></hr>
+            <p className="px-6 font-bold dark:text-white">He is a good student</p>
+            <hr className="border-black dark:border-white"></hr>
 
          </div>
          </div>
