@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 
 // Définition d'une zone autorisée (latitude, longitude et rayon en km)
 const AUTHORIZED_ZONE = {
-  lat:  4.0862, // Exemple: Paris
-  lon: 9.7452,
-  radius: 1, // Rayon autorisé en km
+  lat:3.8661, // Exemple: Paris
+  lon:11.5154,
+  radius: 2, // Rayon autorisé en km
 };
 
 // Fonction pour calculer la distance entre deux points GPS (Haversine Formula)
@@ -55,12 +55,12 @@ export default function GeolocationComponent() {
     : false;
 
   return (
-    <div className="p-4 border rounded-lg shadow-md max-w-md mx-auto text-center">
+    <div className="p-4 border rounded-lg shadow-md max-w-md flex justify-center items-center flex-col mx-auto text-center  dark:bg-slate-700">
       {error ? (
         <p className="text-red-500 font-semibold">{error}</p>
       ) : location ? (
         <>
-          <p className="text-lg font-semibold">
+          <p className="text-lg font-semibold dark:text-white">
             Votre position : Lat: {location.lat.toFixed(4)}, Lon: {location.lon.toFixed(4)}
           </p>
           <p className={`mt-2 ${isAuthorized ? "text-green-500" : "text-red-500"} font-bold`}>

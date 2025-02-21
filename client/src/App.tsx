@@ -22,6 +22,7 @@ import Presence from "./components/Presence";
 import Erreur from "./components/Erreur";
 import Toast from "./components/Toastify";
 import DarkMode from "./components/DarkMode";
+// import PresenceConfirmation from "./components/PresenceConfirmation";
 
 type ProtectedRouteProps = {
   children: React.ReactNode;

@@ -6,13 +6,11 @@ import { FiUser } from "react-icons/fi";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { MdOutlineDateRange } from "react-icons/md";
 import { MdReportGmailerrorred } from "react-icons/md";
-import { MdNotifications } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { PiSignOut } from "react-icons/pi";
 import { FaSignOutAlt } from "react-icons/fa";
 import { LuCoffee } from "react-icons/lu";
 import { MdAccessTime } from "react-icons/md";
-import { MdDarkMode } from "react-icons/md";
 import {  useUser } from "@clerk/clerk-react";
 import { Bar } from 'react-chartjs-2';
 import {
@@ -25,6 +23,8 @@ import {
   Legend,
 } from 'chart.js';
 import {  UserButton } from "@clerk/clerk-react";
+import DarkMode from "./DarkMode";
+import Infos from "./Infos";
 
 ChartJS.register(
   CategoryScale,
@@ -171,13 +171,13 @@ const formatdate = today.toLocaleDateString("en-Us",{
             <Link to="/presence">
             <div className="group">
               <div className="flex items-center gap-2 group-hover:bg-white border  p-2 rounded-lg cursor-pointer">
-                <PiSignOut className="flex-shrink-0 max-sm:w-5 max-sm:h-5 md: group-hover:text-black  text-white dark:text-gray-400  dark:group-hover:text-white" />
+                <PiSignOut className="flex-shrink-0 max-sm:w-5 max-sm:h-5  md: group-hover:text-black da  text-white hover:dark:text-black  " />
                 <p className="text-white text-sm group-hover:text-black text-nowrap">Aurevoir</p>
               </div>
             </div>  
             </Link>
-            <MdNotifications className="flex-shrink-0 max-sm:w-5 max-sm:h-5 w-7 h-7 text-white cursor-pointer dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-            <MdDarkMode className="text-2xl text-white"/>
+            <Infos/>
+            <DarkMode/>
             <div
              
              
@@ -185,48 +185,8 @@ const formatdate = today.toLocaleDateString("en-Us",{
               onClick={toggle}
             >
               <UserButton/>
-              
             </div>
           </div>
-          {/* user profil */}
-                  <div
-                  
-                    className={`z-50 absolute right-0 mt-52 mx-2  py-2 w-54 bg-white rounded-md shadow-lg dark:bg-gray-700 ${
-                      open ? 'block' : 'hidden'
-                    }`}
-                  >
-                    <ul className="divide-y divide-gray-100 dark:divide-gray-600">
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                          <p>Theo@711</p>
-                          <p>theodore@gmail.com</p>
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 hover:text-green-600 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                        Profile
-                        </a>
-                      </li>
-                    
-                      <li>
-                      <Link to="/Login">
-                        <a
-                          href="#"
-                          className="block px-4 py-2 hover:text-red-600 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                          Sign out
-                        </a>
-                      </Link>
-                      </li>
-                    </ul>
-                  </div>
-          {/* **************** */}
         </div>
       </div>
   
@@ -244,7 +204,7 @@ const formatdate = today.toLocaleDateString("en-Us",{
          <li className="">
           <Link to='/admin'>
             <a href="#" className="flex items-center  p-2 text-gray-900 rounded-lg dark:text-white  hover:bg-gray-100 dark:hover:bg-gray-700 group ">
-               <BiHome className={`flex-shrink-0 w-5 h-5 ${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-500'}      dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white   `}/>
+               <BiHome className={`flex-shrink-0 w-5 h-5 ${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-500'}     group-hover:text-gray-900 dark:group-hover:text-white   `}/>
                <span  onClick={()=>HandlesTab(1)} className={`${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-900'}  ms-[1.31rem] `} > Dashboard</span>
             </a>
             </Link>
@@ -300,14 +260,14 @@ const formatdate = today.toLocaleDateString("en-Us",{
 
 {/* End sidebar */}
 
-<div className={`p-4 ml-14 mt-5 `}>
-   <div onClick={handleclick}   className={`p-4 border-2 bg-blue-100  transition-transform  border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-10`}>
+<div className={`p-4 ml-14 mt-5 dark:bg-gray-600 `}>
+   <div onClick={handleclick}   className={`p-4 border-2 bg-blue-100  transition-transform  border-gray-200 dark:bg-slate-500 rounded-lg dark:border-gray-700 mt-10`}>
       <div className=" mb-4 bg-gray-50 dark:bg-gray-800 rounded-md">
         {/* les trois premiers grid (1re colone) */}
             <div className="flex justify-between items-center p-3 mb">
                <div className="flex items-center">
                      <div className="p-1 bg-blue-500 rounded-lg w-1 h-[30px] "></div>
-                     <p className="mx-2 text-lg font-semibold text-gray-900">Good Day , {user?.firstName}</p>
+                     <p className="mx-2 text-lg dark:text-white font-semibold text-gray-900">Good Day , {user?.firstName}</p>
                </div>
                <div className="bg-green-500 rounded-lg p-3 flex items-center  max-sm:hidden">
                   <MdOutlineDateRange className="text-white font-semibold"/>
@@ -366,11 +326,6 @@ const formatdate = today.toLocaleDateString("en-Us",{
     </div>
           {/*Rapport Graphic  */}
         </div>
-          
-
-
-        
-            
       </div>
       {/* end analytics */}
       <div className="grid grid-cols-2 gap-4">

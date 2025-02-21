@@ -4,14 +4,15 @@ import { Link } from "react-router-dom"
 import { BiHome } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { IoNotificationsOutline } from "react-icons/io5";
-import { MdDarkMode, MdOutlineDateRange } from "react-icons/md";
+import { MdOutlineDateRange } from "react-icons/md";
 import { MdReportGmailerrorred } from "react-icons/md";
-import { MdNotifications } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { PiSignOut } from "react-icons/pi";
 import { MdDangerous } from "react-icons/md";
 import { GoCheck } from "react-icons/go";
 import { UserButton } from "@clerk/clerk-react";
+import Infos from "./Infos";
+import DarkMode from "./DarkMode";
 const Reportproblem = () => {
   const [Tab, setTab]=useState(5);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -64,16 +65,14 @@ const [isOpen, setIsOpen] = useState(false);
             <Link to="/Login">
             <div className="group">
               <div className="flex items-center gap-2 group-hover:bg-white border  p-2 rounded-lg cursor-pointer">
-                <PiSignOut className="flex-shrink-0 max-sm:w-5 max-sm:h-5 md: group-hover:text-black  text-white dark:text-gray-400  dark:group-hover:text-white" />
+                <PiSignOut className="flex-shrink-0 max-sm:w-5 max-sm:h-5  md: group-hover:text-black da  text-white hover:dark:text-black  " />
                 <p className="text-white text-sm group-hover:text-black text-nowrap">Sign Out</p>
               </div>
             </div>  
             </Link>
-            <MdNotifications className="flex-shrink-0 max-sm:w-5 max-sm:h-5 w-7 h-7 text-white cursor-pointer dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-            <MdDarkMode className="text-2xl text-white"/>
+            <Infos />
+            <DarkMode/>
             <div
-             
-             
               className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
               onClick={toggle}
             >
@@ -81,45 +80,6 @@ const [isOpen, setIsOpen] = useState(false);
               
             </div>
           </div>
-          {/* user profil */}
-                  <div
-                  
-                    className={`z-50 absolute right-0 mt-52 mx-2  py-2 w-54 bg-white rounded-md shadow-lg dark:bg-gray-700 ${
-                      open ? 'block' : 'hidden'
-                    }`}
-                  >
-                    <ul className="divide-y divide-gray-100 dark:divide-gray-600">
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                          <p>Theo@711</p>
-                          <p>theodore@gmail.com</p>
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 hover:text-green-600 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                        Profile
-                        </a>
-                      </li>
-                    
-                      <li>
-                      <Link to="/Login">
-                        <a
-                          href="#"
-                          className="block px-4 py-2 hover:text-red-600 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                          Sign out
-                        </a>
-                      </Link>
-                      </li>
-                    </ul>
-                  </div>
-          {/* **************** */}
         </div>
       </div>
   
@@ -134,8 +94,8 @@ const [isOpen, setIsOpen] = useState(false);
          <li className="">
           <Link to='/admin'>
             <a href="#" className="flex items-center  p-2 text-gray-900 rounded-lg dark:text-white  hover:bg-gray-100 dark:hover:bg-gray-700 group ">
-               <BiHome className={`flex-shrink-0 w-5 h-5 ${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-500'}      dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white   `}/>
-               <span  onClick={()=>HandlesTab(1)} className={`${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-900'} ms-[1.29rem]   `} > Dashboard</span>
+               <BiHome className={`flex-shrink-0 w-5 h-5 ${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-500'} dark:text-white      dark:text-whitegroup-hover:text-gray-900 dark:group-hover:text-white   `}/>
+               <span  onClick={()=>HandlesTab(1)} className={`${Tab ===1 ? 'text-blue-600 font-bold':'text-gray-900'} ms-[1.29rem] dark:text-white   `} > Dashboard</span>
             </a>
             </Link>
          </li>
@@ -144,9 +104,9 @@ const [isOpen, setIsOpen] = useState(false);
             <Link to='/userdetail' >
             <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                
-               <FiUser className={`flex-shrink-0 w-5 h-5 ${Tab ===2 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`} />
+               <FiUser className={`flex-shrink-0 w-5 h-5 ${Tab ===2 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-white group-hover:text-gray-900 dark:group-hover:text-white`} />
                   
-               <span onClick={()=>HandlesTab(2)} className={`${Tab===2 ? 'text-blue-600 font-bold':'text-gray-900'} ms-[1.29rem] whitespace-nowrap  `} >Profile</span>
+               <span onClick={()=>HandlesTab(2)} className={`${Tab===2 ? 'text-blue-600 font-bold':'text-gray-900'} ms-[1.29rem] dark:text-white whitespace-nowrap  `} >Profile</span>
                
             </a>
             </Link>
@@ -156,8 +116,8 @@ const [isOpen, setIsOpen] = useState(false);
          {/* Leaves Applications */}
           <Link to='/Leaves' >
             <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               <MdOutlineDateRange className={`flex-shrink-0 w-5 h-5 ${Tab ===3 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`} />
-               <span  onClick={()=>HandlesTab(3)} className={`${Tab===3 ? 'text-blue-600 font-bold':'text-gray-900'} flex-1 ms-[1.29rem] whitespace-nowrap  `}>Leave Applications</span>
+               <MdOutlineDateRange className={`flex-shrink-0 w-5 h-5 ${Tab ===3 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-white group-hover:text-gray-900 dark:group-hover:text-white`} />
+               <span  onClick={()=>HandlesTab(3)} className={`${Tab===3 ? 'text-blue-600 font-bold':'text-gray-900'} flex-1 ms-[1.29rem] dark:text-white whitespace-nowrap  `}>Leave Applications</span>
             </a>
             </Link>
          {/* Leaves Applications */}
@@ -167,8 +127,8 @@ const [isOpen, setIsOpen] = useState(false);
           <Link to='/Notifications' >
             <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                
-               <IoNotificationsOutline  className={`flex-shrink-0 w-5 h-5 ${Tab ===4 ? 'text-blue-600 font-bold':'text-gray-500'} dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`}/>
-               <span  onClick={()=>HandlesTab(4)} className={`${Tab===4 ? 'text-blue-600 font-bold':'text-gray-900'} flex-1 ms-[1.29rem] whitespace-nowrap  `}>Notifications</span>
+               <IoNotificationsOutline  className={`flex-shrink-0 w-5 h-5 ${Tab ===4 ? 'text-blue-600 font-bold':'text-gray-500'} dark:text-white group-hover:text-gray-900 dark:group-hover:text-white`}/>
+               <span  onClick={()=>HandlesTab(4)} className={`${Tab===4 ? 'text-blue-600 font-bold':'text-gray-900'} flex-1 ms-[1.29rem] dark:text-white whitespace-nowrap  `}>Notifications</span>
             </a>
             {/* Notifications */}
             </Link>
@@ -178,8 +138,8 @@ const [isOpen, setIsOpen] = useState(false);
           <Link to='/Reportproblem' >
             <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                
-               <MdReportGmailerrorred className={`flex-shrink-0 w-5 h-5 ${Tab ===5 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white`}/>
-               <span  onClick={()=>HandlesTab(5)} className={`${Tab===5 ? 'text-blue-600 font-bold': 'text-gray-900'} flex-1 ms-[1.29rem] whitespace-nowrap  `}>Report a Problem</span>
+               <MdReportGmailerrorred className={`flex-shrink-0 w-5 h-5 ${Tab ===5 ? 'text-blue-600 font-bold':'text-gray-500'}   group-hover:text-gray-900 dark:group-hover:text-white`}/>
+               <span  onClick={()=>HandlesTab(5)} className={`${Tab===5 ? 'text-blue-600 font-bold': 'text-gray-900'} flex-1 ms-[1.29rem]  whitespace-nowrap  `}>Report a Problem</span>
             </a>
             </Link>
             {/*reportproblems  */}
@@ -188,19 +148,19 @@ const [isOpen, setIsOpen] = useState(false);
    </div>
 </aside>
 {/* End sidebar */}
-<div className="p-4 ml-14 mt-5  ">
-   <div  className={`p-4 border-2 bg-white ${isSidebarOpen ? 'translate-x-0':'14'} transition-transform  border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-10`}>
+<div className="p-4 ml-14 mt-5 dark:bg-gray-600  ">
+   <div  className={`p-4 border-2 bg-white ${isSidebarOpen ? 'translate-x-0':'14'} transition-transform  border-gray-200 dark:bg-slate-500 rounded-lg dark:border-gray-700 mt-10`}>
       <div className="flex items-center justify-center h-20 rounded p-3 bg-slate-200 dark:bg-gray-800 mb-8 font-poppins">
             <div className="flex justify-between w-full items-center">
                <div className="flex items-center gap-2">
                   <div className="h-[30px] w-2 bg-violet-700 rounded-lg"></div>
-                  <p className="text-xl text-black dark:text-gray-500">
+                  <p className="text-xl text-black dark:text-white">
                      Issues
                   </p>
                </div>
                <div onClick={toggleModal} className="bg-violet-700 flex items-center gap-1 text-white rounded-lg p-2 text-sm cursor-pointer">
                   <MdReportGmailerrorred/>
-                  <p>Report A Problem</p>
+                  <p className="dark:text-white">Report A Problem</p>
                </div>
             </div>
             {/* Debut de la modal*********************************************************** */}
@@ -273,61 +233,61 @@ const [isOpen, setIsOpen] = useState(false);
     
         
          </div>
-      <div className="grid grid-cols-1 gap-4 mb-4 font-poppins">
+      <div className="grid grid-cols-1 gap-4 mb-4 font-poppins ">
          <div className="flex  bg-red-100 h-20 dark:bg-gray-800 rounded">
             <div className="flex items-center justify-between w-full gap-2 p-6">
                <div className="flex gap-2 items-center">
                   <div className="bg-red-600 text-white p-2 rounded-full"><MdDangerous/></div>
-                  <p className="text-xs text-black dark:text-gray-500">The website is loading slowly.</p>
+                  <p className="text-xs text-black dark:text-white">The website is loading slowly.</p>
                   {/* nombre de caractere maximale 41 */}
                </div>
                <div className="bg-red-600 p-2 rounded">
-                  <p className="text-xs text-white dark:text-gray-500">Unresolved</p>
+                  <p className="text-xs text-white dark:text-white">Unresolved</p>
                </div>
             </div>
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
+            <p className="text-2xl text-gray-400 dark:text-white">
             </p>
          </div>
          <div className="flex  bg-red-100 h-20 dark:bg-gray-800 rounded">
             <div className="flex items-center justify-between w-full gap-2 p-6">
                <div className="flex gap-2 items-center">
                   <div className="bg-red-600 text-white p-2 rounded-full"><MdDangerous/></div>
-                  <p className="text-xs text-black dark:text-gray-500">Unable to access the internal tool.</p>
+                  <p className="text-xs text-black dark:text-white">Unable to access the internal tool.</p>
                   {/* nombre de caractere maximale 41 */}
                </div>
                <div className="bg-red-600 p-2 rounded">
-                  <p className="text-xs text-white dark:text-gray-500">Unresolved</p>
+                  <p className="text-xs text-white dark:text-white">Unresolved</p>
                </div>
             </div>
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
+            <p className="text-2xl text-gray-400 dark:text-white">
             </p>
          </div>
          <div className="flex  bg-green-100 h-20 dark:bg-gray-800 rounded">
             <div className="flex items-center justify-between w-full gap-2 p-6">
                <div className="flex gap-2 items-center">
                   <div className="bg-green-500 text-white p-2 rounded-full"><GoCheck/></div>
-                  <p className="text-xs text-black dark:text-gray-500">Water problem in office.</p>
+                  <p className="text-xs text-black dark:text-white">Water problem in office.</p>
                   {/* nombre de caractere maximale 41 */}
                </div>
                <div className="bg-green-500 p-2 rounded">
-                  <p className="text-xs text-white dark:text-gray-500">Resolved</p>
+                  <p className="text-xs text-white dark:text-white">Resolved</p>
                </div>
             </div>
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
+            <p className="text-2xl text-gray-400 dark:text-white">
             </p>
          </div>
          <div className="flex  bg-red-100 h-20 dark:bg-gray-800 rounded">
             <div className="flex items-center justify-between w-full gap-2 p-6">
                <div className="flex gap-2 items-center">
                   <div className="bg-red-600 text-white p-2 rounded-full"><MdDangerous/></div>
-                  <p className="text-xs text-black dark:text-gray-500">Office time is not manageable.</p>
+                  <p className="text-xs text-black dark:text-white">Office time is not manageable.</p>
                   {/* nombre de caractere maximale 41 */}
                </div>
                <div className="bg-red-600 p-2 rounded">
-                  <p className="text-xs text-white dark:text-gray-500">Unresolved</p>
+                  <p className="text-xs text-white dark:text-white">Unresolved</p>
                </div>
             </div>
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
+            <p className="text-2xl text-gray-400 dark:text-white">
             </p>
          </div>
       </div>

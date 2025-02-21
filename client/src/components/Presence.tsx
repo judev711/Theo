@@ -1,17 +1,16 @@
 import { useAuth, UserButton } from "@clerk/clerk-react"
 import { useEffect, useState } from "react"
-import { MdDarkMode, MdNotifications } from "react-icons/md"
+import { MdNotifications } from "react-icons/md"
 import { FcHome } from "react-icons/fc";
 import { Link } from "react-router-dom"
 import {  useUser } from "@clerk/clerk-react";
 import Loader from "./Loader"
-import FaceId from './FaceId'
+
 import GetLocation from "./GetLocation";
-
+import CoPresence from "./CoPresence";
+// import Infos from "./Infos";
+import DarkMode from "./DarkMode";
 // import { SignIn } from "@clerk/clerk-react";
-
-
-
 const Presence = () => {
   const { user } = useUser()
 
@@ -42,77 +41,77 @@ const toggle = ()=>{
     return <Loader />;
   };
 
-  return (
-    <div className="">
-        <nav   className={`fixed top-0 z-50 w-full bg-[#7e22ce] border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700`}>
-     <div className="px-3 py-3 lg:px-5 lg:pl-3">
-    <div className="flex items-center justify-between ">
-      {/* navbar logo */}
-      <div  className="flex items-center justify-start rtl:justify-end ">
-        {/* burger */}
-        <button  onClick={toggleSidebar}   type="button" className="inline-flex text-xl items-center p-2  text-white  font-bold  dark:text-gray-400 dark:hover:bg-gray-700 " >
-               <p>eBuyClock</p>
+  return (<>
+  <div className="dark:bg-slate-700 flex flex-col h-screen w-full">
+      <nav className={`fixed top-0 z-50 w-full bg-[#7e22ce] border-b shadow-2xl border-gray-200 dark:bg-gray-800 dark:border-gray-700`}>
+      <div className="px-3 py-3 lg:px-5 lg:pl-3">
+        <div className="flex items-center justify-between ">
+          {/* navbar logo */}
+          <div className="flex items-center justify-start rtl:justify-end ">
             {/* burger */}
-         </button>
-          <span className="inline-flex text-xl items-center p-2  text-white  font-bold  dark:text-gray-400 dark:hover:bg-gray-700">
-            Theo
-          </span>
-        {/* logo */}
-      </div>
-      {/* end of navbar logo */}
-      {/* navbar of profil */}
- <div className="flex items-center">
-        <div className="flex items-center ms-3">
-          {/* user profile */}
-          <div  className="flex items-center gap-5 max-md:gap-2">
-            <Link to="/">
-            <div className="group">
-              <div className="flex items-center gap-2 group-hover:bg-white border  p-2 rounded-lg cursor-pointer">
-                <FcHome className="flex-shrink-0 max-sm:w-5 max-sm:h-5 md: group-hover:text-black  text-white dark:text-gray-400  dark:group-hover:text-white" />
-                <p className="text-white text-sm group-hover:text-black text-nowrap">Acceuil</p>
+            <button onClick={toggleSidebar} type="button" className="inline-flex text-xl items-center p-2  text-white  font-bold  dark:text-gray-400 dark:hover:bg-gray-700 ">
+              <p>eBuyClock</p>
+              {/* burger */}
+            </button>
+            <span className="inline-flex text-xl items-center p-2  text-white  font-bold  dark:text-gray-400 dark:hover:bg-gray-700">
+              Theo
+            </span>
+            {/* logo */}
+          </div>
+          {/* end of navbar logo */}
+          {/* navbar of profil */}
+          <div className="flex items-center">
+            <div className="flex items-center ms-3">
+              {/* user profile */}
+              <div className="flex items-center gap-5 max-md:gap-2">
+                <Link to="/">
+                  <div className="group">
+                    <div className="flex items-center gap-2 group-hover:bg-white border  p-2 rounded-lg cursor-pointer">
+                      <FcHome className="flex-shrink-0 max-sm:w-5 max-sm:h-5 md: group-hover:text-black  text-white dark:text-gray-400  dark:group-hover:text-white" />
+                      <p className="text-white text-sm group-hover:text-black text-nowrap">Acceuil</p>
+                    </div>
+                  </div>
+                </Link>
+                {/* <Infos /> */}
+                <DarkMode/>
+                <div
+
+
+                  className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                  onClick={toggle}
+                >
+                  <UserButton />
+                </div>
               </div>
-            </div>  
-            </Link>
-            <MdNotifications className="flex-shrink-0 max-sm:w-5 max-sm:h-5 w-7 h-7 text-white cursor-pointer dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-            <MdDarkMode className="text-2xl text-white"/>
-            <div
-             
-             
-              className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-              onClick={toggle}
-            >
-              <UserButton/>
+              {/* user profil */}
+              {/* **************** */}
             </div>
           </div>
-          {/* user profil */}
-          {/* **************** */}
+
         </div>
       </div>
+      </nav>
+      <div className="flex flex-col container  h-full w-full justify-center p-3  bg-white  mt-28 mb-28  items-center dark:bg-slate-700 ">
+
+        <div className="flex flex-col items-center text-center gap-2 mb-4">
+          <MdNotifications className="text-2xl text-violet-700 cursor-pointer" />
+          <GetLocation />
+        </div>
+        <div className="w-full justify-center items-center flex flex-col">
+          <h1 className=" font-semibold mb-4 dark:text-white">hello {user?.firstName}, please check your presence !</h1>
+          <CoPresence/>
+          {/* <p className="text-green-600 font-bold mt-5">Please verify your presence within the company premises !</p> */}
+
+        </div>
+
+
+
+      </div>
+
+  </div>
   
-    </div>
-  </div>
-</nav>
-  <div className=" font-poppins   ">
-    <div className="flex flex-col container mx-auto justify-center p-3  bg-white mt-28  border-2 mb-28  items-center border-black ">
-      
-      <div className="flex flex-col items-center text-center gap-2 mb-4"> 
-        <MdNotifications  className="text-2xl text-violet-700 cursor-pointer"/>
-       <GetLocation/>
-      </div>
-      <div className="w-full">
-        <h1 className="text-start font-semibold mb-4">hello {user?.firstName}, please check your presence !</h1> 
-        <h1 className="font-extrabold text-center bg-blue-400 rounded">FACE ID</h1>
-        <FaceId/>
-        <p className="text-green-600 font-bold mt-5">Please verify your presence within the company premises !</p>
+    </>
 
-      </div>
-       
-     
-
-    </div>
- 
-  </div>
-</div>
   )
 }
 

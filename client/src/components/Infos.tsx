@@ -46,7 +46,7 @@ const NotificationIcon = () => {
     <div className="relative" ref={notificationRef}>
       {/* Icône de notification */}
       <div className="relative cursor-pointer" onClick={handleNotificationClick}>
-        <MdNotifications className="w-7 h-7 text-white cursor-pointer dark:text-gray-400" />
+        <MdNotifications className="w-7 h-7 text-white cursor-pointer dark:text-white" />
         {unreadCount > 0 && (
           <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
             {unreadCount > 3 ? "3+" : unreadCount}

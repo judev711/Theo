@@ -139,7 +139,7 @@ const toggle = ()=>{
             <Link to="/Login">
             <div className="group">
               <div className="flex items-center gap-2 group-hover:bg-white border  p-2 rounded-lg cursor-pointer">
-                <PiSignOut className="flex-shrink-0 max-sm:w-5 max-sm:h-5 md: group-hover:text-black  text-white dark:text-gray-400  dark:group-hover:text-white" />
+                <PiSignOut className="flex-shrink-0 max-sm:w-5 max-sm:h-5  md: group-hover:text-black da  text-white hover:dark:text-black  " />
                 <p className="text-white text-sm group-hover:text-black text-nowrap">Sign Out</p>
               </div>
             </div>  
@@ -156,9 +156,6 @@ const toggle = ()=>{
               <UserButton/>
             </div>
           </div>
-          {/* user profil */}
-                 
-          {/* **************** */}
         </div>
       </div>
   
@@ -195,7 +192,7 @@ const toggle = ()=>{
          {/* Leaves Applications */}
           <Link to='/Leaves' >
           <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <MdOutlineDateRange className={`flex-shrink-0 w-5 h-5 ${Tab ===3 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-white group-hover:text-gray-900 dark:group-hover:text-white`} />
+            <MdOutlineDateRange className={`flex-shrink-0 w-5 h-5 ${Tab ===3 ? 'text-blue-600 font-bold':'text-gray-500'}  group-hover:text-gray-900 dark:group-hover:text-white`} />
                <span  onClick={()=>HandlesTab(3)} className={`${Tab===3 ? 'text-blue-600 font-bold':'text-gray-900'} flex-1  whitespace-nowrap ms-[1.29rem] `}>Leave Applications</span>
           </div>
                

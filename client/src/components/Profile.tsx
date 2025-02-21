@@ -142,7 +142,6 @@ const metadata = user.publicMetadata as PublicMetadata;
     }
   };
   return ( <>
-  
   <nav   className={`fixed top-0 z-50 w-full bg-[#7e22ce] border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700`}>
   <div className="px-3 py-3 lg:px-5 lg:pl-3 ">
     <div className="flex items-center justify-between">
@@ -154,8 +153,6 @@ const metadata = user.publicMetadata as PublicMetadata;
                <RxHamburgerMenu className={`w-5 h-5 `} />
             {/* burger */}
          </button>
-         
-         
         <a href="" className="flex ms-2 md:me-24  gap-2">
           <span className="self-center text-xl text-white font-extrabold sm:text-2xl whitespace-nowrap text dark:text-white">Theo</span>
         </a>
@@ -170,7 +167,7 @@ const metadata = user.publicMetadata as PublicMetadata;
             <Link to="/Login">
             <div className="group">
               <div className="flex items-center gap-2 group-hover:bg-white border  p-2 rounded-lg cursor-pointer">
-                <PiSignOut className="flex-shrink-0 max-sm:w-5 max-sm:h-5 md: group-hover:text-black  text-white dark:text-gray-400  dark:group-hover:text-white" />
+                <PiSignOut className="flex-shrink-0 max-sm:w-5 max-sm:h-5  md: group-hover:text-black da  text-white hover:dark:text-black  " />
                 <p className="text-white text-sm group-hover:text-black text-nowrap">Sign Out</p>
               </div>
             </div>  
@@ -178,18 +175,12 @@ const metadata = user.publicMetadata as PublicMetadata;
             <Infos />
             <DarkMode/>
             <div
-             
-             
               className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
               onClick={toggle}
             >
-              <UserButton/>
-              
+               <UserButton/>
             </div>
           </div>
-          {/* user profil */}
-                  
-          {/* **************** */}
         </div>
       </div>
   
@@ -214,7 +205,7 @@ const metadata = user.publicMetadata as PublicMetadata;
             <Link to='/userdetail' >
             <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                
-               <FiUser className={`flex-shrink-0 w-5 h-5 ${Tab ===2 ? 'text-blue-600 font-bold':'text-gray-500'}  dark:text-white  group-hover:text-gray-900 dark:group-hover:text-white`} />
+               <FiUser className={`flex-shrink-0 w-5 h-5 ${Tab ===2 ? 'text-blue-600 font-bold':'text-gray-500'}  group-hover:text-gray-900 dark:group-hover:text-white`} />
                   
                <span onClick={()=>HandlesTab(2)} className={`${Tab===2 ? 'text-blue-600 font-bold':'text-gray-900'} ms-[1.29rem] whitespace-nowrap  `} >Profile</span>
                
