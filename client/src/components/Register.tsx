@@ -125,7 +125,7 @@ const Register = () => {
             <div>
               {/* formulaire d'inscription */}
               <form onSubmit={handlesSignup}>
-                <div className="w-full font-poppins max-sm:text-sm">
+                <div className="w-full font-Helvetica  max-sm:text-sm">
                   {/* Premier groupe */}
                   <div className="mb-4 grid grid-cols-2 gap-2 w-full max-sm:mb-8 ">
                     <div className="flex flex-col ">

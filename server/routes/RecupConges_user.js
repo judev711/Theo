@@ -2,7 +2,6 @@ import express from "express";
 import pool from "../db.js"; // Connexion MySQL (assurez-vous qu'elle est bien configurée)
 import { requireAuth } from "@clerk/express"; // Middleware Clerk
 const router = express.Router();
-import cors from 'cors'
 router.get("/Demande", requireAuth(), async (req, res) => {
   try {
     const clerkId = req.auth.userId;

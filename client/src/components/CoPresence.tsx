@@ -1,74 +1,135 @@
 import { useState } from "react";
 import axios from "axios";
-import { useUser } from "@clerk/clerk-react";
-import { toast } from "react-hot-toast";
-import { Loader2 } from "lucide-react"; // Icône de chargement
+import { useAuth } from "@clerk/clerk-react";
+import { motion } from "framer-motion";
+import { ImSpinner2 } from "react-icons/im";
+import { toast } from "react-hot-toast"; // Importer react-hot-toast
+import { useNavigate } from "react-router-dom";
 import Toastify from "./Toastify";
 
-const PresenceValidation = () => {
-  const { user } = useUser();
+const COMPANY_LATITUDE = 3.8661; // Latitude de l'entreprise
+const COMPANY_LONGITUDE = 11.5154; // Longitude de l'entreprise
+const ALLOWED_RADIUS = 25; // Rayon autorisé en mètres
+
+const PresenceButton = () => {
+  const { userId } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
+  const navigate = useNavigate()
 
-  const handlePresence = async () => {
-    if (!user) {
-      toast.error("Vous devez être connecté !");
+  // Fonction pour calculer la distance entre deux points (Formule de Haversine)
+  const getDistanceFromLatLonInMeters = (
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number
+  ): number => {
+    const R = 6371000;
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLon = ((lon2 - lon1) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  };
+
+  const handleConfirmPresence = async () => {
+    if (!userId) {
+      toast.error("❌ Utilisateur non authentifié.");
       return;
     }
 
-    if (!navigator.geolocation) {
-      toast.error(
-        "La géolocalisation n'est pas supportée par votre navigateur."
-      );
-      return;
-    }
-
-    setLoading(true);
-
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const { latitude, longitude } = position.coords;
-
-        try {
-          const response = await axios.post(
-            "http://localhost:5000/api/presence/confirm-presence",
-            { lat: latitude, lng: longitude },
-            { withCredentials: true, timeout: 50000 }
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        async (position: GeolocationPosition) => {
+          const { latitude, longitude } = position.coords;
+          const distance = getDistanceFromLatLonInMeters(
+            latitude,
+            longitude,
+            COMPANY_LATITUDE,
+            COMPANY_LONGITUDE
           );
 
-          toast.success(response.data.message);
-        } catch (err) {
-          const errorMessage =
-            axios.isAxiosError(err) && err.response?.data?.error
-              ? err.response.data.error
-              : "Erreur lors de l'enregistrement.";
-          console.error("Erreur :", err);
-          toast.error(errorMessage);
-        } finally {
-          setLoading(false);
+          if (distance > ALLOWED_RADIUS) {
+            toast.error("❌ Vous êtes hors de la zone autorisée !");
+            return;
+          }
+
+          setLoading(true);
+
+          try {
+            const response = await axios.post(
+              "http://localhost:5000/api/presence/confirm-presence",
+              {},
+              { withCredentials: true }
+            );
+
+            console.log("Réponse du serveur :", response.data.message); // 🔍 Debug
+
+            if (
+              response.data.message.includes("Présence") &&
+              response.data.message.includes("confirmée")
+            ) {
+              navigate("/admin"); // ✅ Redirection si la présence est confirmée
+            }
+
+            toast.success(`✅ ${response.data.message}`);
+            setConfirmed(true);
+          } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+              const errorMessage =
+                error.response?.data?.error ||
+                "❌ Erreur lors de l'enregistrement !";
+              toast.error(errorMessage);
+            } else {
+              toast.error("❌ Une erreur inattendue s'est produite !");
+            }
+          } finally {
+            setLoading(false);
+          }
+        },
+        (error: GeolocationPositionError) => {
+          toast.error("❌ Impossible d'obtenir votre position.");
+          console.error(error);
         }
-      },
-      (error) => {
-        console.error("Erreur de géolocalisation :", error);
-        toast.error("Impossible d'obtenir votre position.");
-        setLoading(false);
-      }
-    );
+      );
+    } else {
+      toast.error(
+        "❌ La géolocalisation n'est pas prise en charge sur cet appareil."
+      );
+    }
   };
 
   return (
-    <div className="flex flex-col items-center p-6 bg-white shadow-md rounded-lg dark:bg-slate-700 dark:text-white">
-      <Toastify />
-      <h1 className="text-2xl font-bold mb-4">Validation de présence</h1>
-      <button
-        onClick={handlePresence}
-        disabled={loading}
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50 flex items-center"
+    <div className="flex flex-col items-center">
+      <Toastify/>
+      <motion.button
+        onClick={handleConfirmPresence}
+        disabled={loading || confirmed}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className={`flex items-center justify-center gap-2 bg-blue-500 text-white p-3 rounded transition-all duration-300 ${
+          loading || confirmed
+            ? "opacity-50 cursor-not-allowed"
+            : "hover:scale-105"
+        }`}
       >
-        {loading ? <Loader2 className="animate-spin w-5 h-5 mr-2" /> : null}
-        {loading ? "Validation..." : "Valider la présence"}
-      </button>
+        {loading ? (
+          <>
+            <ImSpinner2 className="animate-spin" /> ⏳ Enregistrement...
+          </>
+        ) : confirmed ? (
+          "✅ Présence confirmée"
+        ) : (
+          "📍 Confirmer Présence"
+        )}
+      </motion.button>
     </div>
   );
 };
 
-export default PresenceValidation;
+export default PresenceButton;

@@ -1,87 +1,69 @@
 import express from "express";
-import pool from "../db.js";
-import { requireAuth } from "@clerk/express"; // Middleware Clerk
+import { requireAuth } from "@clerk/express";
+import pool from "../db.js"; // Assurez-vous que pool est bien configuré
 
 const router = express.Router();
 
-// 🏢 Coordonnées de l'entreprise
-const COMPANY_LAT = 3.8661;
-const COMPANY_LNG = 11.5154;
-
-// 📌 Fonction pour déterminer si c'est une présence du matin ou du soir
-const getPresenceType = () => {
-  const hours = new Date().getHours();
-  return hours < 12 ? "matin" : "soir";
-};
-
-// 📌 Fonction de calcul de distance avec Haversine
-const haversineDistance = (lat1, lon1, lat2, lon2) => {
-  const R = 6371; // Rayon de la Terre en km
-  const dLat = (lat2 - lat1) * (Math.PI / 180);
-  const dLon = (lon2 - lon1) * (Math.PI / 180);
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(lat1 * (Math.PI / 180)) *
-      Math.cos(lat2 * (Math.PI / 180)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c; // Distance en km
-};
-
-// 📌 Vérification de la distance
-const isWithinDistance = (lat, lng) => {
-  const distance = haversineDistance(lat, lng, COMPANY_LAT, COMPANY_LNG);
-  console.log(`📏 Distance calculée : ${distance.toFixed(2)} km`);
-  return distance <= 1; // Seuil de 1 km
-};
-
-// 🔖 Confirmation de présence via un bouton
-router.post("/confirm-presence", requireAuth, async (req, res) => {
-  console.log("✅ Requête reçue:", req.body);
-  const { userId } = req.auth;
-  const { lat, lng } = req.body;
-
-  if (!userId || !lat || !lng) {
-    return res.status(400).json({ error: "Données manquantes" });
-  }
-
-  const userLat = parseFloat(lat);
-  const userLng = parseFloat(lng);
-
-  if (!isWithinDistance(userLat, userLng)) {
-    return res
-      .status(403)
-      .json({ error: "Vous n'êtes pas dans la zone autorisée !" });
-  }
-
+router.post("/confirm-presence", requireAuth(), async (req, res) => {
   try {
-    // 🔖 Vérification de l'utilisateur dans la base MySQL
-    const [userRows] = await pool.query(
+    const clerkId = req.auth.userId;
+
+    // 🔹 Récupérer id_user depuis la base
+    const [rows] = await pool.query(
       "SELECT id_user FROM utilisateur WHERE clerkId = ?",
-      [userId]
+      [clerkId]
     );
 
-    if (userRows.length === 0) {
-      return res.status(404).json({ error: "Utilisateur introuvable !" });
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Utilisateur introuvable" });
     }
 
-    const id_user = userRows[0].id_user;
+    const id_user = rows[0].id_user;
+    const currentHour = new Date().getHours();
+    let type_presence = "";
+    let status = "present";
 
-    // 🔖 Enregistrement de la présence en base de données (sans latitude et longitude)
-    const presenceType = getPresenceType();
+    // 🔹 Déterminer la période (matin ou après-midi) et le statut
+    if (currentHour < 8) {
+      type_presence = "matin";
+    } else if (currentHour >= 8 && currentHour < 12) {
+      type_presence = "matin";
+      status = "absent"; // Arrivée tardive matin
+    } else if (currentHour >= 12 && currentHour < 17) {
+      type_presence = "soir";
+    } else {
+      type_presence = "soir";
+      status = "absent"; // Arrivée tardive soir
+    }
+
+    // 🔹 Vérifier si l'utilisateur a déjà enregistré sa présence pour cette période
+    // const [existing] = await pool.query(
+    //   "SELECT id FROM presence WHERE id_user = ? AND type_presence = ? AND DATE(date_arrivee) = CURDATE()",
+    //   [id_user, type_presence]
+    // );
+
+    // if (existing.length > 0) {
+    //   return res
+    //     .status(409)
+    //     .json({
+    //       error: `Vous avez déjà enregistré votre présence ce ${type_presence}.`,
+    //     });
+    // }
+
+    // 🔹 Enregistrer la présence
     await pool.query(
       "INSERT INTO presence (date_arrivee, type_presence, status, id_user) VALUES (NOW(), ?, ?, ?)",
-      [presenceType, "present", id_user]
+      [type_presence, status, id_user]
     );
 
-    console.log(`✅ Présence enregistrée : ${userId} (${presenceType})`);
-    res.json({ success: true, message: "Présence enregistrée avec succès !" });
+    res.json({
+      message: `Présence ${type_presence} confirmée en tant que '${status}' !`,
+      type_presence: type_presence,
+      status: status,
+    });
   } catch (error) {
-    console.error("❌ Erreur serveur :", error);
-    res
-      .status(500)
-      .json({ error: "Erreur lors de l'enregistrement de la présence" });
+    console.error("Erreur serveur :", error);
+    res.status(500).json({ error: "Erreur lors de l'enregistrement" });
   }
 });
 

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 // Définition d'une zone autorisée (latitude, longitude et rayon en km)
 const AUTHORIZED_ZONE = {
   lat:3.8661, // Exemple: Paris
-  lon:11.5154,
+  lon: 11.5154,
   radius: 2, // Rayon autorisé en km
 };
 
