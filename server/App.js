@@ -1,12 +1,11 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
-
 import Register_userRoutes from "./routes/Register_user.js"; // Routes pour l'inscription
 import Conges_users from "./routes/Conges_users.js"; // Routes pour les congés
 import RecupConges_users from "./routes/RecupConges_user.js"
 import PresenceRoutes from "./routes/PresenceRoutes.js"
-
+import Count_User from "./routes/Count_User.js"
 import { clerkMiddleware, requireAuth } from "@clerk/express"; // Middleware Clerk
 
 const app = express(); // ✅ Utilisation de "app" au lieu de "App"
@@ -26,6 +25,7 @@ app.use("/Register", Register_userRoutes);
 app.use("/postC", Conges_users);
 app.use("/Api/conges", RecupConges_users);
 app.use("/api/presence", PresenceRoutes);
+app.use("/api/details", Count_User);
 
 // ✅ Exemple d'une route protégée avec Clerk
 app.get("/protected", requireAuth(), (req, res) => {

@@ -52,7 +52,7 @@ const Acceuil = () => {
       <nav className="bg-violet-800 text-white p-4 shadow-lg fixed w-full z-10">
       <div className="container mx-auto items-center md:flex md:justify-between  ">
         {/* Logo */}
-        <div className="flex justify-between">
+        <div className="flex justify-between ">
           <div className="text-xl font-extrabold p-3 bg-violet-300 rounded cursor-pointer">e@BuyClock</div>
 
           {/* Hamburger Menu for Mobile */}

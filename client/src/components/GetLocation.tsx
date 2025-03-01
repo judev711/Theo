@@ -1,31 +1,41 @@
 import { useState, useEffect } from "react";
 
-// Définition d'une zone autorisée (latitude, longitude et rayon en km)
 const AUTHORIZED_ZONE = {
-  lat:3.8661, // Exemple: Paris
-  lon: 11.5154,
+  lat: 4.0909,
+  lon: 9.7449,
   radius: 2, // Rayon autorisé en km
 };
 
 // Fonction pour calculer la distance entre deux points GPS (Haversine Formula)
-const haversineDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+const haversineDistance = (
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+) => {
   const toRad = (value: number) => (value * Math.PI) / 180;
-  const R = 6371; // Rayon de la Terre en km
+  const R = 6371;
   const dLat = toRad(lat2 - lat1);
   const dLon = toRad(lon2 - lon1);
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    Math.cos(toRad(lat1)) *
+      Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c; // Distance en km
+  return R * c;
 };
 
 const useGeolocation = () => {
-  const [location, setLocation] = useState<{ lat: number; lon: number } | null>(null);
+  const [location, setLocation] = useState<{ lat: number; lon: number } | null>(
+    null
+  );
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
+  const fetchLocation = () => {
+    setLoading(true);
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -33,43 +43,76 @@ const useGeolocation = () => {
             lat: position.coords.latitude,
             lon: position.coords.longitude,
           });
+          setError(null);
+          setLoading(false);
         },
         (err) => {
           console.error("Erreur de géolocalisation:", err);
-          setError("Impossible de vous atteindre.");
+          setError(
+            "Impossible d'obtenir votre position. Veuillez activer la localisation."
+          );
+          setLoading(false);
         }
       );
     } else {
       setError("La géolocalisation n'est pas supportée par votre navigateur.");
+      setLoading(false);
     }
+  };
+
+  useEffect(() => {
+    fetchLocation();
   }, []);
 
-  return { location, error };
+  return { location, error, loading, fetchLocation };
 };
 
 export default function GeolocationComponent() {
-  const { location, error } = useGeolocation();
+  const { location, error, loading, fetchLocation } = useGeolocation();
 
   const isAuthorized = location
-    ? haversineDistance(location.lat, location.lon, AUTHORIZED_ZONE.lat, AUTHORIZED_ZONE.lon) <= AUTHORIZED_ZONE.radius
+    ? haversineDistance(
+        location.lat,
+        location.lon,
+        AUTHORIZED_ZONE.lat,
+        AUTHORIZED_ZONE.lon
+      ) <= AUTHORIZED_ZONE.radius
     : false;
 
   return (
-    <div className="p-4 border rounded-lg shadow-md max-w-md flex justify-center items-center flex-col mx-auto text-center  dark:bg-slate-700">
-      {error ? (
+    <div className="p-4 border rounded-lg shadow-md max-w-md mx-auto text-center dark:bg-slate-700 flex flex-col items-center">
+      {loading ? (
+        <p className="text-blue-500 font-semibold">
+          📡 Obtention de la localisation...
+        </p>
+      ) : error ? (
         <p className="text-red-500 font-semibold">{error}</p>
       ) : location ? (
         <>
           <p className="text-lg font-semibold dark:text-white">
-            Votre position : Lat: {location.lat.toFixed(4)}, Lon: {location.lon.toFixed(4)}
+            📍 Latitude: {location.lat.toFixed(6)}
           </p>
-          <p className={`mt-2 ${isAuthorized ? "text-green-500" : "text-red-500"} font-bold`}>
-            {isAuthorized ? "✅ Vous êtes dans la zone autorisée." : "⛔ Vous êtes hors de la zone autorisée."}
+          <p className="text-lg font-semibold dark:text-white">
+            📍 Longitude: {location.lon.toFixed(6)}
+          </p>
+          <p
+            className={`mt-2 ${
+              isAuthorized ? "text-green-500" : "text-red-500"
+            } font-bold`}
+          >
+            {isAuthorized
+              ? "✅ Vous êtes dans la zone autorisée."
+              : "⛔ Vous êtes hors de la zone autorisée."}
           </p>
         </>
-      ) : (
-        <p>Obtention de la localisation...</p>
-      )}
+      ) : null}
+
+      <button
+        onClick={fetchLocation}
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-800"
+      >
+        🔄 Actualiser la position
+      </button>
     </div>
   );
 }

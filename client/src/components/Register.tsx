@@ -90,7 +90,10 @@ const Register = () => {
     <div className="justify-center items-center flex bg-slate-100 max-sm:px-3 md:px-6 md:py-8 max-sm:py-3 mx-auto h-screen ">
       <div className="flex w-full ">
         {/* section inscription */}
-        <div className="bg-white w-full  ">
+        <div
+          className="bg-white w-full bg-cover bg-center "
+          style={{ backgroundImage: "url(./src/assets/large.jpg)" }}
+        >
           <div className="max-sm:p-3 md:p-6 xl:mt-6 ">
             <h1 className=" max-sm:text-xl text-3xl font-bold">WELCOME</h1>
             <h1 className="text-center text-xl font-bold mb-5 mt-3 ">
@@ -113,7 +116,13 @@ const Register = () => {
                     ease: "easeInOut",
                   }}
                 >
-                  <div style={{ width: "50px", height: "50px", backgroundColor: "red" }}>
+                  <div
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      backgroundColor: "red",
+                    }}
+                  >
                     <span style={{ color: "white", fontSize: "32px" }}>
                       <FaRunning />
                     </span>
@@ -132,7 +141,10 @@ const Register = () => {
                       <label className="font-semibold">FirstName</label>
                       <input
                         onChange={(e) =>
-                          setSignupData({ ...signupData, firstName: e.target.value })
+                          setSignupData({
+                            ...signupData,
+                            firstName: e.target.value,
+                          })
                         }
                         type="text"
                         name="firstName"
@@ -145,7 +157,10 @@ const Register = () => {
                       <label className="font-semibold">LastName</label>
                       <input
                         onChange={(e) =>
-                          setSignupData({ ...signupData, lastName: e.target.value })
+                          setSignupData({
+                            ...signupData,
+                            lastName: e.target.value,
+                          })
                         }
                         type="text"
                         name="lastName"
@@ -160,7 +175,10 @@ const Register = () => {
                       <label className="font-semibold">BirthDay</label>
                       <input
                         onChange={(e) =>
-                          setSignupData({ ...signupData, birthDate: e.target.value })
+                          setSignupData({
+                            ...signupData,
+                            birthDate: e.target.value,
+                          })
                         }
                         type="date"
                         required
@@ -172,7 +190,10 @@ const Register = () => {
                       <label className="font-semibold">Sexe</label>
                       <select
                         onChange={(e) =>
-                          setSignupData({ ...signupData, gender: e.target.value })
+                          setSignupData({
+                            ...signupData,
+                            gender: e.target.value,
+                          })
                         }
                         name="gender"
                         id="gender"
@@ -208,7 +229,10 @@ const Register = () => {
                       <label className="font-semibold">Phone Number</label>
                       <input
                         onChange={(e) =>
-                          setSignupData({ ...signupData, phonenumber: e.target.value })
+                          setSignupData({
+                            ...signupData,
+                            phonenumber: e.target.value,
+                          })
                         }
                         type="text"
                         required
@@ -222,7 +246,10 @@ const Register = () => {
                       <label className="font-semibold">Email</label>
                       <input
                         onChange={(e) =>
-                          setSignupData({ ...signupData, email: e.target.value })
+                          setSignupData({
+                            ...signupData,
+                            email: e.target.value,
+                          })
                         }
                         type="email"
                         required
@@ -234,9 +261,12 @@ const Register = () => {
                     <div className="flex flex-col">
                       <label className="font-semibold">Password</label>
                       <input
-                      name="password"
+                        name="password"
                         onChange={(e) =>
-                          setSignupData({ ...signupData, password: e.target.value })
+                          setSignupData({
+                            ...signupData,
+                            password: e.target.value,
+                          })
                         }
                         type="password"
                         required
@@ -256,13 +286,14 @@ const Register = () => {
                       {loading ? "Chargement..." : "S'inscrire"}
                     </button>
                     <Link to="/Login">
-                    <div
-                      className="text-white bg-violet-700 p-2 cursor-pointer rounded-lg font-semibold px-6 hover:bg-gray-900">
+                      <div className="text-white bg-violet-700 p-2 cursor-pointer rounded-lg font-semibold px-6 hover:bg-gray-900">
                         Se Connecter
-                    </div>
+                      </div>
                     </Link>
                   </div>
-                  <p className="font-mono font-bold mt-5 text-center">@2024 Theodore*711 </p>
+                  <p className="font-mono font-bold mt-5 text-center">
+                    @2024 Theodore*711{" "}
+                  </p>
                 </div>
               </form>
             </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  useState } from "react";
 import axios from "axios";
 import { useAuth } from "@clerk/clerk-react";
 import { motion } from "framer-motion";
@@ -7,9 +7,9 @@ import { toast } from "react-hot-toast"; // Importer react-hot-toast
 import { useNavigate } from "react-router-dom";
 import Toastify from "./Toastify";
 
-const COMPANY_LATITUDE = 3.8661; // Latitude de l'entreprise
-const COMPANY_LONGITUDE = 11.5154; // Longitude de l'entreprise
-const ALLOWED_RADIUS = 25; // Rayon autorisé en mètres
+const COMPANY_LATITUDE = 4.084665; // Latitude de l'entreprise
+const COMPANY_LONGITUDE = 9.734381; // Longitude de l'entreprise
+const ALLOWED_RADIUS = 1000; // Rayon autorisé en mètres
 
 const PresenceButton = () => {
   const { userId } = useAuth();
@@ -103,16 +103,47 @@ const PresenceButton = () => {
       );
     }
   };
+  //websocket -io
+  // const { getToken} = useAuth();
+  // const [socket, setSocket] = useState<Socket | null>(null);
+
+  // useEffect(() => {
+  //   const setupSocket = async () => {
+  //     const token = await getToken();
+  //     const newSocket = io("http://localhost:4000", {
+  //       auth: { token }, // Envoie le token Clerk pour authentifier le WebSocket
+  //     });
+
+  //     newSocket.on("absence-notification", (data) => {
+  //       if (data.clerkId === userId) {
+  //         toast.error(data.message);
+  //       }
+  //     });
+
+  //     setSocket(newSocket);
+
+  //     return () => {
+  //       newSocket.disconnect();
+  //     };
+  //   };
+
+  //   setupSocket();
+  // }, [getToken, userId]);
+
+  //end websocket -io
 
   return (
-    <div className="flex flex-col items-center">
-      <Toastify/>
+    <div
+      className="flex flex-col items-center bg-center bg-cover "
+      style={{ backgroundImage: "url(./src/assets/large.jpg)" }}
+    >
+      <Toastify />
       <motion.button
         onClick={handleConfirmPresence}
         disabled={loading || confirmed}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className={`flex items-center justify-center gap-2 bg-blue-500 text-white p-3 rounded transition-all duration-300 ${
+        className={`flex items-center justify-center gap-2 bg-violet-500 text-white p-3 rounded transition-all duration-300 ${
           loading || confirmed
             ? "opacity-50 cursor-not-allowed"
             : "hover:scale-105"

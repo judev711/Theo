@@ -22,6 +22,10 @@ import Presence from "./components/Presence";
 import Erreur from "./components/Erreur";
 import Toast from "./components/Toastify";
 import DarkMode from "./components/DarkMode";
+import Statics from "./components/Statics";
+import Getlocation from "./components/GetLocation"
+import Infos from "./components/Infos";
+import NOTIF from "./components/NOTIF";
 // import PresenceConfirmation from "./components/PresenceConfirmation";
 
 type ProtectedRouteProps = {
@@ -48,8 +52,12 @@ const router = createBrowserRouter(
       <Route path="/Acceuil" element={<Acceuil />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-      <Route path = "/notif" element={<Toast/>}/>
-      <Route path = "/darkmode" element={<DarkMode/>}/>
+      <Route path="/notif" element={<Toast />} />
+      <Route path="/darkmode" element={<DarkMode />} />
+      <Route path="/Stat" element={<Statics />} />
+      <Route path="/getP" element={<Getlocation />} />
+      <Route path="/infos" element={<Infos/>}/>
+      <Route path="news" element={<NOTIF/>}/>
 
       {/* Pages protégées */}
       <Route

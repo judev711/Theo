@@ -184,24 +184,26 @@ const Profile = () => {
       <nav
         className={`fixed top-0 z-50 w-full bg-[#7e22ce] border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700`}
       >
-        <div className="px-3 py-3 lg:px-5 lg:pl-3 font-Helvetica ">
+        <div className="px-3 py-3 lg:px-5 lg:pl-3 font-poppis ">
           <div className="flex items-center justify-between">
             {/* navbar logo */}
             <div className="flex items-center justify-start rtl:justify-end ">
               {/* burger */}
+              <div className="">
+                <img
+                  src="./src/assets/large.jpg"
+                  alt="logo"
+                  className="w-[3.1rem] h-[3.1rem] rounded-lg"
+                />
+              </div>
               <button
                 onClick={toggleSidebar}
                 type="button"
-                className="inline-flex items-center p-2 text-sm text-white  font-bold  dark:text-gray-400 dark:hover:bg-gray-700 "
+                className="inline-flex items-center p-2 text-sm text-white  font-bold  dark:text-gray-400  "
               >
                 <RxHamburgerMenu className={`w-5 h-5 `} />
                 {/* burger */}
               </button>
-              <a href="" className="flex ms-2 md:me-24  gap-2">
-                <span className="self-center text-xl text-white font-extrabold sm:text-2xl whitespace-nowrap text dark:text-white">
-                  Theo
-                </span>
-              </a>
               {/* logo */}
             </div>
             {/* end of navbar logo */}
@@ -243,9 +245,9 @@ const Profile = () => {
         <div
           className={`h-full  px-[0.80rem] pb-4 overflow-y-auto  dark:bg-gray-800   `}
         >
-          <ul className={`space-y-3 font-medium     `}>
+          <ul className={`space-y-3 font-medium font-poppis    `}>
             {/* icon Dashboard */}
-            <li className="">
+            <li className=" font">
               <Link to="/admin">
                 <a
                   href="#"
@@ -309,7 +311,7 @@ const Profile = () => {
                     onClick={() => HandlesTab(3)}
                     className={`${
                       Tab === 3 ? "text-blue-600 font-bold" : "text-gray-900"
-                    } flex-1 ms-[1.29rem] whitespace-nowrap dark:text-white font-Helvetica    `}
+                    } flex-1 ms-[1.29rem] whitespace-nowrap dark:text-white font-poppis    `}
                   >
                     Leave Applications
                   </span>
@@ -382,7 +384,7 @@ const Profile = () => {
               <div className="flex  justify-between max-sm:flex-col max-sm:items-start gap-6 mb-10     items-center w-full">
                 <div className="flex gap-1 items-center">
                   <div className="bg-violet-700 p-1 rounded-lg w-2 h-[30px]"></div>
-                  <p className="text-xl  text font-Helvetica   text-black dark:text-white">
+                  <p className="text-xl  text font-poppis   text-black dark:text-white">
                     Employee Details
                   </p>
                 </div>
@@ -391,7 +393,7 @@ const Profile = () => {
                   className="flex gap-1 items-center text-white p-3 rounded-lg bg-violet-700 cursor-pointer"
                 >
                   <FaDownload className="" />
-                  <p className="text font-Helvetica  dark:text-white">
+                  <p className="text font-poppis  dark:text-white">
                     Download Info
                   </p>
                 </div>
@@ -523,31 +525,31 @@ const Profile = () => {
             <div className="flex   justify-between  rounded  dark:bg-gray-800 w-full mb-4">
               <div className="flex  gap-2">
                 <div className=" flex items-center h-[30px] w-2 rounded-lg bg-violet-700 p-1"></div>
-                <p className="font-Helvetica  text-xl text-gray-700 dark:text-white">
+                <p className="font-poppis  text-xl text-gray-700 dark:text-white">
                   Attendance History
                 </p>
               </div>
               <div className="flex flex-row gap-2 max-sm:hidden  ">
                 <div className="bg-violet-700 p-1 rounded-lg h-[32px]">
-                  <GrAppsRounded className="font-Helvetica  text-white text-2xl" />
+                  <GrAppsRounded className="font-poppis  text-white text-2xl" />
                 </div>
                 <div className="bg-black p-1 rounded-lg h-[32px]">
-                  <IoMenu className="font-Helvetica  text-white text-2xl" />
+                  <IoMenu className="font-poppis  text-white text-2xl" />
                 </div>
-                <div className="bg-black p-3 rounded-lg flex items-center h-[32px]  text-white   font-Helvetica  gap-1">
+                <div className="bg-black p-3 rounded-lg flex items-center h-[32px]  text-white   font-poppis  gap-1">
                   <FiFilter />
                   <p>Filter</p>
                 </div>
-                <div className="bg-black p-3  rounded-lg flex items-center h-[32px]  text-white font-Helvetica  gap-1">
+                <div className="bg-black p-3  rounded-lg flex items-center h-[32px]  text-white font-poppis  gap-1">
                   <FaSort />
                   <p>Sort</p>
                 </div>
               </div>
             </div>
-            <div className="flex justify-between w-[360px] max-sm:w-[285px] max-md:w-[500px] rounded-md bg-slate-300 dark:text-white dark:bg-gray-700 font-Helvetica  ">
+            <div className="flex justify-between w-[360px] max-sm:w-[285px] max-md:w-[500px] rounded-md bg-slate-300 dark:text-white dark:bg-gray-700 font-poppis  ">
               <div className="flex flex-col  p-3">
                 <div className="flex items-center gap-2 mb-4">
-                  <TbClockHour4 className="font-Helvetica " />
+                  <TbClockHour4 className="font-poppis " />
                   <p className="font-semibold ">Dec 24, 2024</p>
                 </div>
                 <div className="flex flex-col gap-1 text-sm ">
@@ -572,7 +574,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center gap-3 font-Helvetica  mb-4 rounded  dark:bg-gray-800 p-6">
+          <div className="flex items-center justify-center gap-3 font-poppis  mb-4 rounded  dark:bg-gray-800 p-6">
             <div className="rounded-lg p-3 bg-slate-300 cursor-pointer">
               <p>Previous</p>
             </div>
@@ -583,13 +585,13 @@ const Profile = () => {
               <p>Next</p>
             </div>
           </div>
-          <div className="flex flex-col p-3 gap-2 font-Helvetica  rounded bg-slate-100 h-48 dark:bg-gray-800 mb-4">
+          <div className="flex flex-col p-3 gap-2 font-poppis  rounded bg-slate-100 h-48 dark:bg-gray-800 mb-4">
             <div className="flex gap-2 mb-4">
               <div className="h-[30px] flex items-center  bg-violet-700 w-2 rounded-lg"></div>
               <p className=" text-gray-700 text-xl dark:text-white">Reviews</p>
             </div>
-            <div className="flex flex-col gap-3  font-Helvetica  ">
-              <div className="flex flex-row gap-3 items-center font-Helvetica  px-6">
+            <div className="flex flex-col gap-3  font-poppis  ">
+              <div className="flex flex-row gap-3 items-center font-poppis  px-6">
                 <div className="flex flex-row gap-3 text-amber-400 text-xl items-center">
                   <FaStar />
                   <FaStar />
@@ -598,7 +600,7 @@ const Profile = () => {
                   <FaStar />
                 </div>
                 <p className="text-2xl dark:text-white ">|</p>
-                <p className="text-gray-600 font-Helvetica  dark:text-white">
+                <p className="text-gray-600 font-poppis  dark:text-white">
                   24 Dec 2024
                 </p>
               </div>

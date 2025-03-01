@@ -9,7 +9,7 @@ export const content = [
 export const theme = {
   extend: {
     fontFamily: {
-      Helvetica: ["Helvetica Neue ", "sans serif"],
+      poppins: ["poppins", "sans-serif"],
     },
   },
   darkmode: "class",
