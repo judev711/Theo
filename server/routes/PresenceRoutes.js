@@ -13,33 +13,18 @@ router.post("/confirm-presence", requireAuth(), async (req, res) => {
     const heureActuelle = now.toTimeString().slice(0, 5); // HH:MM
     const dateheureActuelle = `${dateActuelle} ${heureActuelle}`; // "YYYY-MM-DD HH:MM"
 
+    // Déterminer la période de présence
     let type_presence = null;
-    let status = "absent";
     let date_arrivee = null;
     let date_sortis = null;
 
-    if (heureActuelle <= "08:00") {
+    if (heureActuelle <= "12:00") {
       type_presence = "matin";
-      status = "present";
-      date_arrivee = dateheureActuelle;
-    } else if (heureActuelle > "08:00" && heureActuelle < "12:00") {
-      type_presence = "matin";
-      status = "absent";
-    } else if (heureActuelle >= "17:00") {
-      type_presence = "soir";
-      status = "present";
-      date_sortis = dateheureActuelle;
-    } else if (heureActuelle > "12:00") {
-      type_presence = "soir";
-      status = "absent";
-      date_sortis = dateheureActuelle;
     } else {
-      return res
-        .status(400)
-        .json({ error: "Hors des heures de travail autorisées." });
+      type_presence = "soir";
     }
 
-    // Récupération de l'id_user via le clerkId
+    // Trouver l'utilisateur via clerkId
     const [users] = await pool.query(
       "SELECT id_user FROM utilisateur WHERE clerkId = ?",
       [clerkId]
@@ -51,67 +36,67 @@ router.post("/confirm-presence", requireAuth(), async (req, res) => {
 
     const id_user = users[0].id_user;
 
-    // Vérifier s'il existe déjà une présence pour ce jour et cette période
+    // Vérifier s'il y a déjà une présence pour aujourd'hui et cette période
     const [existingPresence] = await pool.query(
-      `SELECT id, date_arrivee, date_sortis 
-       FROM presence 
-       WHERE id_user = ? AND DATE(date_arrivee) = ? AND type_presence = ?`,
+      "SELECT id, date_arrivee, date_sortis FROM presence WHERE id_user = ? AND DATE(date_arrivee) = ? AND type_presence = ?",
       [id_user, dateActuelle, type_presence]
     );
 
     if (existingPresence.length > 0) {
+      // Si une présence existe déjà pour cette période, on met à jour
       const presence = existingPresence[0];
 
-      if (date_arrivee && presence.date_arrivee) {
-        return res
-          .status(409)
-          .json({ error: "L'arrivée du matin a déjà été enregistrée." });
+      if (type_presence === "matin") {
+        if (presence.date_arrivee) {
+          return res
+            .status(409)
+            .json({ error: "Présence matin déjà confirmée." });
+        }
+        date_arrivee = dateheureActuelle;
+      } else if (type_presence === "soir") {
+        if (presence.date_sortis) {
+          return res
+            .status(409)
+            .json({ error: "Présence soir déjà confirmée." });
+        }
+        date_sortis = dateheureActuelle;
       }
 
-      if (date_sortis && presence.date_sortis) {
-        return res
-          .status(409)
-          .json({ error: "La sortie de l'après-midi a déjà été enregistrée." });
-      }
-
-      // Mise à jour uniquement de la colonne pertinente
-      const updateQuery = `
-        UPDATE presence 
-        SET date_arrivee = COALESCE(?, date_arrivee),
-            date_sortis = COALESCE(?, date_sortis)
-        WHERE id = ?
-      `;
-
-      await pool.query(updateQuery, [date_arrivee, date_sortis, presence.id]);
-
+      // Mise à jour de la présence existante (arrivee ou sortie)
+      await pool.query(
+        "UPDATE presence SET date_arrivee = COALESCE(?, date_arrivee), date_sortis = COALESCE(?, date_sortis) WHERE id = ?",
+        [date_arrivee, date_sortis, presence.id]
+      );
+       
       return res.json({
-        message: `Mise à jour réussie pour ${type_presence}.`,
+        message: `Présence ${type_presence} mise à jour.`,
+        type_presence,
+        date_arrivee,
+        date_sortis,
+      });
+    } else {
+      // Si aucune présence, on insère la première (arrivée matin ou sortie soir)
+      let status = "absent"; // Par défaut
+      if (type_presence === "matin" && heureActuelle <= "08:00") {
+        status = "present";
+        date_arrivee = dateheureActuelle;
+      } else if (type_presence === "soir" && heureActuelle >= "17:00") {
+        status = "present";
+        date_sortis = dateheureActuelle;
+      }
+
+      await pool.query(
+        "INSERT INTO presence (date_arrivee, date_sortis, type_presence, status, id_user) VALUES (?, ?, ?, ?, ?)",
+        [date_arrivee, date_sortis, type_presence, status, id_user]
+      );
+      res.json({ message: "success" });
+      res.json({
+        message: `Présence ${type_presence} enregistrée.`,
         type_presence,
         date_arrivee,
         date_sortis,
       });
     }
-
-    // Si aucune présence n'existe pour cette période, on insère
-    const insertQuery = `
-      INSERT INTO presence (date_arrivee, date_sortis, type_presence, status, id_user)
-      VALUES (?, ?, ?, ?, ?)
-    `;
-
-    await pool.query(insertQuery, [
-      date_arrivee,
-      date_sortis,
-      type_presence,
-      status,
-      id_user,
-    ]);
-
-    res.json({
-      message: `Présence ${type_presence} confirmée en tant que '${status}' !`,
-      type_presence,
-      date_arrivee,
-      date_sortis,
-    });
   } catch (error) {
     console.error("❌ Erreur serveur :", error);
     res

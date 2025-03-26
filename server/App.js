@@ -6,6 +6,8 @@ import Conges_users from "./routes/Conges_users.js"; // Routes pour les congés
 import RecupConges_users from "./routes/RecupConges_user.js"
 import PresenceRoutes from "./routes/PresenceRoutes.js"
 import Count_User from "./routes/Count_User.js"
+import Problem_User from "./routes/Problem_User.js"
+import RecupProblem from "./routes/RecupProblem.js"
 import { clerkMiddleware, requireAuth } from "@clerk/express"; // Middleware Clerk
 
 const app = express(); // ✅ Utilisation de "app" au lieu de "App"
@@ -26,6 +28,8 @@ app.use("/postC", Conges_users);
 app.use("/Api/conges", RecupConges_users);
 app.use("/api/presence", PresenceRoutes);
 app.use("/api/details", Count_User);
+app.use("/api/err", Problem_User);
+app.use("/api/data", RecupProblem);
 
 // ✅ Exemple d'une route protégée avec Clerk
 app.get("/protected", requireAuth(), (req, res) => {

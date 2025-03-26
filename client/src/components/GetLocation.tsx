@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 
 const AUTHORIZED_ZONE = {
-  lat: 4.0909,
-  lon: 9.7449,
+  lat: 4.084965,
+  lon: 9.734690,
   radius: 2, // Rayon autorisé en km
 };
 

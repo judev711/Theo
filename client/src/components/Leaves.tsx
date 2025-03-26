@@ -18,7 +18,7 @@ import { TbClockHour4 } from "react-icons/tb";
 import { TbEdit } from "react-icons/tb";
 import { UserButton } from "@clerk/clerk-react";
 import { useUser } from "@clerk/clerk-react"; //
-import InfosNotif from "./Infos";
+import InfosNotif from "./Infos.tsx";
 import toast from "react-hot-toast";
 import DarkMode from './DarkMode.tsx'
 
@@ -35,8 +35,6 @@ interface Conge {
   status: string;
 }
 const Leaves = () => {
-   
-
   const [Tab, setTab]=useState(3);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const toggleSidebar = () => {

@@ -53,7 +53,7 @@ const Acceuil = () => {
       <div className="container mx-auto items-center md:flex md:justify-between  ">
         {/* Logo */}
         <div className="flex justify-between ">
-          <div className="text-xl font-extrabold p-3 bg-violet-300 rounded cursor-pointer">e@BuyClock</div>
+          <div ><img src="./src/assets/large.jpg" alt="logo" className="w-[3.1rem] h-[3.1rem] rounded-lg"/></div>
 
           {/* Hamburger Menu for Mobile */}
           <button
@@ -120,12 +120,12 @@ const Acceuil = () => {
         
       
     <div className="flex justify-center items-center p-3">
-      <p className="text-white xl:text-[3rem] max-sm:text-[2rem] text-center font-extrabold text-wrap">Suivez Vos Heures De Travail En Temps Réel Avec e@BuyClock - Votre Partenaire De Confiance</p>
+      <p className="text-white xl:text-[3rem] max-sm:text-[2rem] text-center font-extrabold text-wrap">Suivez Vos Heures De Travail En Temps Réel Avec ZYCRON Votre Partenaire De Confiance</p>
     </div>
     </div>
     <div className="flex flex-col gap-3 mt-5 p-6 bg-white ">
-      <h1 className="text-center text-3xl  font-extrabold text-violet-600">Bienvenue Chez e@BuyClock</h1>
-      <p className=" text-start text-[1rem]">e@BuyClock  est une application web, spécialisée dans la gestion de suivi de presence des employés. Nous vous accompagnons pour atteindre vos objectifs et réaliser votre potentiel.</p>
+      <h1 className="text-center text-3xl  font-extrabold text-violet-600">Bienvenue Chez ZYCRON</h1>
+      <p className=" text-start text-[1rem]">ZYCRON  est une application web, spécialisée dans la gestion de suivi de presence des employés. Nous vous accompagnons pour atteindre vos objectifs et réaliser votre potentiel.</p>
     </div>
     <div className="bg-slate-300 text-center ">
       
@@ -145,7 +145,7 @@ const Acceuil = () => {
         </div>
         {/* deuxieme grid */}
         <div className="flex flex-col mb-10">
-          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGdlc3Rpb24lMjAlMjBkJ2hvcmFpcmV8ZW58MHx8MHx8fDA%3D" alt="" className=""/>
+          <img src="https://lh5.googleusercontent.com/p/AF1QipNqKaURGgIxInddWBImd3btsMZq1mpCHeeupJqp=w426-h240-k-no" alt="" className="h-72 hover:scale-125"/>
           <div className="flex flex-col gap-2">
           <h1 className="mt-5 text-xl font-bold text-violet-700">Formation en développement personnel</h1>
           <p className="text-1rem">Formations pour renforcer vos compétences</p>
@@ -208,7 +208,7 @@ const Acceuil = () => {
         </div>
         
       </div>
-      <div className="mb-10 bg-white">
+      <div className=" bg-white">
         <div className="grid grid-cols-2 max-md:grid-cols-1 gap-3 container justify-center mx-auto mb-10 ">
           <div className="flex flex-col  mt-16 ">
             <div className="flex  flex-col  container justify-center p-3">
@@ -233,21 +233,35 @@ const Acceuil = () => {
               </div>
             </form>
           </div>
-          <div className=" mt-16 flex justify-center items-center bg-red-600 font-bold flex-col">
-            <p>Erreur TheoDev@711 </p>
-            MapBox Google Pour Demain Encours...
-          </div>
+              <div
+        className="bg-cover mt-5 border-2 border-violet-600 rounded-lg"
+        style={{
+            backgroundImage: "url('./src/assets/is_dev.PNG')",
+            backgroundSize: "auto",
+              }}>
+              
+        </div>
           
 
         </div>
         <div className="bg-violet-600 text-white text-center flex justify-center flex-col p-3">
           <h1 className="text-3xl text-white font-extrabold font-poppins mb-5 ">Qui sommes nous ?</h1>
-          <p className="max-md:text-sm mb-10"><span className="font-extrabold text-black">e@BuyClock</span> est une application web destiner à réaliser le plein potentiel d'une entreprise. Notre équipe d'experts qualifiés vous accompagne avec des solutions adaptées à vos besoins. Découvrez nos services de coaching, formations et ateliers pour transformer votre vie.</p>
+          <p className="max-md:text-sm mb-10"><span className="font-extrabold text-black">ZYCRON</span> est une application web destiner à réaliser le plein potentiel d'une entreprise. Notre équipe d'experts qualifiés vous accompagne avec des solutions adaptées à vos besoins. Découvrez nos services de coaching, formations et ateliers pour transformer votre vie.</p>
           <div className=" hover:brightness-75 duration-500 cursor-pointer max-sm:mx-40 xl:mx-[45vw] bg-violet-500 text-white p-3 "><p>Découvrir</p></div>
         </div>
-        
+        </div>
+        <div className="bg-white ">
+          <div className="grid grid-cols-2">
+            <div className="flex flex-col gap-4 p-6">
+              <h1 className="text-2xl dark:text-white font-bold mb-6">Entreprise</h1>
+              <a href="https://blanche-ikouma.vercel.app/fr"><p className="text-gray-400">Acceuil</p></a>
+              <a href="#"><p className="text-gray-400">Service</p></a>
+              <a href="#"><p className="text-gray-400">Agence</p></a>
+              <a href="#"><p className="text-gray-400">Blog</p></a>
+            </div>
+          </div>
 
-      </div>
+        </div>
       
 
     </div>

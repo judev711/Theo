@@ -1,29 +1,23 @@
-import {  useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useAuth } from "@clerk/clerk-react";
 import { motion } from "framer-motion";
 import { ImSpinner2 } from "react-icons/im";
-import { toast } from "react-hot-toast"; // Importer react-hot-toast
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Toastify from "./Toastify";
 
-const COMPANY_LATITUDE = 4.084665; // Latitude de l'entreprise
-const COMPANY_LONGITUDE = 9.734381; // Longitude de l'entreprise
-const ALLOWED_RADIUS = 1000; // Rayon autorisé en mètres
+const COMPANY_LATITUDE = 4.084965;
+const COMPANY_LONGITUDE = 9.734635;
+const ALLOWED_RADIUS = 1000;
 
-const PresenceButton = () => {
+const PresenceButton: React.FC = () => {
   const { userId } = useAuth();
   const [loading, setLoading] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  // Fonction pour calculer la distance entre deux points (Formule de Haversine)
-  const getDistanceFromLatLonInMeters = (
-    lat1: number,
-    lon1: number,
-    lat2: number,
-    lon2: number
-  ): number => {
+  const getDistanceFromLatLonInMeters = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
     const R = 6371000;
     const dLat = ((lat2 - lat1) * Math.PI) / 180;
     const dLon = ((lon2 - lon1) * Math.PI) / 180;
@@ -60,6 +54,7 @@ const PresenceButton = () => {
           }
 
           setLoading(true);
+          const toastId = toast.loading("⏳ Enregistrement...");
 
           try {
             const response = await axios.post(
@@ -68,28 +63,22 @@ const PresenceButton = () => {
               { withCredentials: true }
             );
 
-            console.log("Réponse du serveur :", response.data.message); // 🔍 Debug
+            toast.success(response.data.message, { id: toastId });
 
-            if (
-              response.data.message.includes("Présence") &&
-              response.data.message.includes("confirmée")
-            ) {
-              navigate("/admin"); // ✅ Redirection si la présence est confirmée
+            if (response.data.message.includes('enregistrée')) {
+              navigate("/admin");
+              setConfirmed(true);
             }
-
-            toast.success(`✅ ${response.data.message}`);
-            setConfirmed(true);
           } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
-              const errorMessage =
-                error.response?.data?.error ||
-                "❌ Erreur lors de l'enregistrement !";
-              toast.error(errorMessage);
+              const errorMessage = error.response?.data?.error || "❌ Erreur lors de l'enregistrement !";
+              toast.error(errorMessage, { id: toastId });
             } else {
-              toast.error("❌ Une erreur inattendue s'est produite !");
+              toast.error("❌ Une erreur inattendue s'est produite !", { id: toastId });
             }
           } finally {
             setLoading(false);
+            toast.dismiss(toastId);
           }
         },
         (error: GeolocationPositionError) => {
@@ -98,43 +87,13 @@ const PresenceButton = () => {
         }
       );
     } else {
-      toast.error(
-        "❌ La géolocalisation n'est pas prise en charge sur cet appareil."
-      );
+      toast.error("❌ La géolocalisation n'est pas prise en charge sur cet appareil.");
     }
   };
-  //websocket -io
-  // const { getToken} = useAuth();
-  // const [socket, setSocket] = useState<Socket | null>(null);
-
-  // useEffect(() => {
-  //   const setupSocket = async () => {
-  //     const token = await getToken();
-  //     const newSocket = io("http://localhost:4000", {
-  //       auth: { token }, // Envoie le token Clerk pour authentifier le WebSocket
-  //     });
-
-  //     newSocket.on("absence-notification", (data) => {
-  //       if (data.clerkId === userId) {
-  //         toast.error(data.message);
-  //       }
-  //     });
-
-  //     setSocket(newSocket);
-
-  //     return () => {
-  //       newSocket.disconnect();
-  //     };
-  //   };
-
-  //   setupSocket();
-  // }, [getToken, userId]);
-
-  //end websocket -io
 
   return (
     <div
-      className="flex flex-col items-center bg-center bg-cover "
+      className="flex flex-col items-center bg-center bg-cover"
       style={{ backgroundImage: "url(./src/assets/large.jpg)" }}
     >
       <Toastify />
@@ -144,9 +103,7 @@ const PresenceButton = () => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className={`flex items-center justify-center gap-2 bg-violet-500 text-white p-3 rounded transition-all duration-300 ${
-          loading || confirmed
-            ? "opacity-50 cursor-not-allowed"
-            : "hover:scale-105"
+          loading || confirmed ? "opacity-50 cursor-not-allowed" : "hover:scale-105"
         }`}
       >
         {loading ? (

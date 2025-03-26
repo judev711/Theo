@@ -1,7 +1,6 @@
 import axios from "axios";
 import { AxiosError } from "axios";
 import { motion } from "framer-motion";
-import { FaRunning } from "react-icons/fa"; // Icône d'un homme qui court
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Loader from "./Loader";
@@ -101,33 +100,14 @@ const Register = () => {
             </h1>
             <div>
               {loading && (
+                <div className="flex justify-center items-center h-screen bg-gradient-to-br from-violet-500 to-violet-600">
                 <motion.div
-                  style={{
-                    marginTop: "20px",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                  animate={{
-                    x: [0, 30, 0], // Déplacement horizontal pour simuler la course
-                  }}
-                  transition={{
-                    duration: 1,
-                    repeat: Infinity, // Répète l'animation en boucle
-                    ease: "easeInOut",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      backgroundColor: "red",
-                    }}
-                  >
-                    <span style={{ color: "white", fontSize: "32px" }}>
-                      <FaRunning />
-                    </span>
-                  </div>
-                </motion.div>
+                  className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"
+                  initial={{ rotate: 0 }}
+                  animate={{ rotate: 360 }}
+                  transition={{ repeat: Infinity, duration: 1 }}
+                />
+              </div>
               )}
             </div>
             <hr className="border-t-1 border-black flex-1 mb-8 " />
@@ -220,6 +200,7 @@ const Register = () => {
                         className="rounded-md p-2 border-2 outline-none bg-gray-100"
                         required
                       >
+                        <option value="">Sélectionnez</option>
                         <option value="Employee">Employee</option>
                         <option value="Web Dev">Web Dev</option>
                         <option value="Maintainer">Maintainer</option>

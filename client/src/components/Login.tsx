@@ -44,7 +44,7 @@ const Login = () => {
                 />
                 
                 </div>
-                  <div className=" w-full max-md:hidden -mt-[4rem] flex items-center p-4 border-black border-1">
+                  <div className=" w-full max-md:hidden  flex items-center p-4 border-black border-1">
                         <div className="flex justify-center items-center  ">
                           <img src="../src/assets/image_login.jpeg" alt="image_login" className="rounded-md bg-contain duration-300 mt-10"/>
                         </div>

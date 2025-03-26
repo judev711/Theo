@@ -117,7 +117,7 @@ const Presence = () => {
                 ease: "linear", // Animation linéaire (vitesse constante)
               }}
             >
-              <FaSatelliteDish className="text-2xl text-violet-700 cursor-pointer" />
+              <FaSatelliteDish className="text-2xl text-violet-700 dark:text-white cursor-pointer" />
             </motion.div>
 
             <GetLocation />
